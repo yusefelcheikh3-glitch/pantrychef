@@ -992,23 +992,48 @@ Output strictly valid JSON matching this exact structure with no markdown backti
 }`;
 
     try {
-      const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + getAiApiKey();
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: systemPrompt }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      });
+      // Automatic Multi-Tier Fallback Cascade: Gemini 3.7 Flash -> Gemini 3.6 Flash -> Gemini 2.5 Flash
+      const modelCascade = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-2.5-flash"];
+      let rawText = null;
+      let usedModel = null;
+      let lastErr = null;
 
-      if (!response.ok) {
-        throw new Error("API returned status: " + response.status);
+      for (const model of modelCascade) {
+        try {
+          if (statusText) statusText.textContent = "AI Chef (" + model + ") is crafting your recipe...";
+          const url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + getAiApiKey();
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: systemPrompt }] }],
+              generationConfig: { responseMimeType: "application/json" }
+            })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+              rawText = data.candidates[0].content.parts[0].text;
+              usedModel = model;
+              break;
+            }
+          } else {
+            console.warn("[AI Chef] " + model + " returned " + response.status + ". Falling back to next model...");
+            lastErr = new Error(model + " returned HTTP " + response.status);
+          }
+        } catch (mErr) {
+          console.warn("[AI Chef] " + model + " failed:", mErr);
+          lastErr = mErr;
+        }
       }
 
-      const data = await response.json();
-      const rawText = data.candidates[0].content.parts[0].text;
+      if (!rawText) {
+        throw lastErr || new Error("All AI models currently unavailable.");
+      }
+
       const recipe = JSON.parse(rawText);
+      console.log("[AI Chef] Successfully generated recipe with:", usedModel);
 
       recipe.aiGenerated = true;
       recipe.id = "ai-" + Date.now();
