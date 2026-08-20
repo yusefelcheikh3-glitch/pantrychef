@@ -347,33 +347,32 @@
   </div>
 
   <!-- Chef Mode Fullscreen Overlay -->
-  <div id="chefModeOverlay" class="chef-overlay" aria-hidden="true">
+  <div id="chefModeOverlay" class="chef-mode-overlay" aria-hidden="true">
     <div class="chef-header">
-      <div class="chef-brand">
-        <span class="chef-brand-text">Chef Mode</span>
-        <span class="chef-brand-sub" id="chefRecipeTitle"></span>
+      <div class="chef-recipe-title">
+        Chef Mode &bull; <span id="chefRecipeTitle"></span>
       </div>
-      <button id="chefExitBtn" class="btn btn-secondary btn-sm">Exit</button>
+      <button id="chefExitBtn" class="chef-exit-btn">Exit</button>
     </div>
 
-    <div class="chef-content">
-      <div class="chef-step-badge" id="chefStepIndicator">Step 1 of 4</div>
+    <div class="chef-main">
+      <div class="chef-step-indicator" id="chefStepIndicator">Step 1 of 4</div>
       <h2 class="chef-step-title" id="chefStepTitle"></h2>
       <p class="chef-step-text" id="chefStepText"></p>
 
       <!-- Active Timer Widget -->
-      <div class="chef-timer-widget" id="chefTimerBox" style="display:none;">
-        <div class="chef-timer-label" id="chefTimerLabel">Timer</div>
-        <div class="chef-timer-digits" id="chefTimerDisplay">00:00</div>
-        <div class="chef-timer-actions">
+      <div class="chef-timer-box" id="chefTimerBox" style="display:none;">
+        <div class="chef-timer-label" id="chefTimerLabel" style="font-size:0.9rem; margin-bottom:4px; font-weight:700;">Timer</div>
+        <div class="chef-timer-display" id="chefTimerDisplay">00:00</div>
+        <div class="chef-timer-controls">
           <button id="chefTimerStartBtn" class="btn btn-primary">Start Timer</button>
-          <button id="chefTimerResetBtn" class="btn btn-secondary">Reset</button>
+          <button id="chefTimerResetBtn" class="btn btn-secondary" style="color:#000;">Reset</button>
         </div>
       </div>
     </div>
 
-    <div class="chef-footer">
-      <button id="chefPrevStepBtn" class="btn btn-secondary btn-lg" disabled>&larr; Previous</button>
+    <div class="chef-footer-controls">
+      <button id="chefPrevStepBtn" class="btn btn-secondary btn-lg" style="color:#000;" disabled>&larr; Previous</button>
       <button id="chefNextStepBtn" class="btn btn-primary btn-lg">Next Step &rarr;</button>
     </div>
   </div>
