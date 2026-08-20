@@ -1,4 +1,4 @@
-const CACHE_NAME = "pantrychef-v0.5.4";
+const CACHE_NAME = "pantrychef-v0.5.5";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -10,7 +10,10 @@ const urlsToCache = [
   "./data/substitutions.js",
   "./data/recipes.js",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./assets/screenshots/app_view1.png",
+  "./assets/screenshots/app_view2.png",
+  "./assets/screenshots/app_view3.png"
 ];
 
 self.addEventListener("install", event => {

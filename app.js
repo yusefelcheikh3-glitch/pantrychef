@@ -1323,6 +1323,38 @@ Output strictly valid JSON matching this exact structure with no markdown backti
   }
 
 
+
+  // --- CAROUSEL LOGIC ---
+  let currentSlide = 0;
+  const totalSlides = 3;
+
+  function updateCarousel() {
+    el.carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    el.carouselDots.forEach((dot, index) => {
+      dot.style.opacity = index === currentSlide ? "1" : "0.3";
+    });
+  }
+
+  el.openTourBtn.addEventListener("click", () => {
+    el.tourModal.classList.add("open");
+    currentSlide = 0;
+    updateCarousel();
+  });
+
+  el.closeTourBtn.addEventListener("click", () => {
+    el.tourModal.classList.remove("open");
+  });
+
+  el.carouselPrev.addEventListener("click", () => {
+    currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
+    updateCarousel();
+  });
+
+  el.carouselNext.addEventListener("click", () => {
+    currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+    updateCarousel();
+  });
+
   // --- SETTINGS MODAL ---
   function openSettingsModal() {
     const modal = document.getElementById("settingsModal");
