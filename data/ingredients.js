@@ -1,6 +1,5 @@
 /**
- * PantryChef Comprehensive Ingredients Database
- * Includes IDs, labels, categories, subcategories, aliases, and match groups (parents)
+ * PantryChef Comprehensive Ingredients Database (v1.1)
  */
 window.PANTRY_INGREDIENTS = [
   // --- PROTEINS ---
@@ -66,7 +65,7 @@ window.PANTRY_INGREDIENTS = [
     category: "proteins",
     subcategory: "meat",
     matchGroups: ["pork", "sausage"],
-    aliases: ["italian sausage", "chorizo", "bratwurst", "hot dogs", "sausages"]
+    aliases: ["italian sausage", "chorizo", "bratwurst", "hot dogs", "sausages", "smoked sausage"]
   },
   {
     id: "salmon",
@@ -173,6 +172,13 @@ window.PANTRY_INGREDIENTS = [
     subcategory: "alliums",
     matchGroups: ["alliums"],
     aliases: ["green onion", "spring onions", "spring onion", "green onions", "chives"]
+  },
+  {
+    id: "ginger",
+    label: "Fresh Ginger",
+    category: "veggies",
+    subcategory: "root",
+    aliases: ["ginger root", "minced ginger", "fresh ginger"]
   },
   {
     id: "bell-pepper",
@@ -319,7 +325,7 @@ window.PANTRY_INGREDIENTS = [
     category: "carbs",
     subcategory: "pasta",
     matchGroups: ["pasta"],
-    aliases: ["dry pasta", "pasta noodles", "spaghetti", "penne", "rigatoni", "fettuccine", "linguine", "fusilli", "elbow macaroni"]
+    aliases: ["dry pasta", "pasta noodles", "spaghetti", "penne", "rigatoni", "fettuccine", "linguine", "fusilli", "elbow macaroni", "tortellini", "gnocchi"]
   },
   {
     id: "spaghetti",
@@ -404,6 +410,34 @@ window.PANTRY_INGREDIENTS = [
 
   // --- SAUCES ---
   {
+    id: "salsa",
+    label: "Salsa / Picante",
+    category: "sauces",
+    subcategory: "condiments",
+    aliases: ["picante", "chunky salsa", "pico de gallo", "jar salsa"]
+  },
+  {
+    id: "pesto",
+    label: "Basil Pesto",
+    category: "sauces",
+    subcategory: "dressings",
+    aliases: ["green pesto", "pesto alla genovese", "jar pesto"]
+  },
+  {
+    id: "peanut-butter",
+    label: "Peanut Butter",
+    category: "sauces",
+    subcategory: "condiments",
+    aliases: ["creamy peanut butter", "crunchy peanut butter", "pb"]
+  },
+  {
+    id: "honey",
+    label: "Honey / Maple Syrup",
+    category: "staples",
+    subcategory: "sweeteners",
+    aliases: ["maple syrup", "pure honey", "agave", "honey"]
+  },
+  {
     id: "soy-sauce",
     label: "Soy Sauce",
     category: "sauces",
@@ -469,41 +503,6 @@ window.PANTRY_INGREDIENTS = [
     aliases: ["rooster sauce", "thai hot sauce"]
   },
   {
-    id: "worcestershire",
-    label: "Worcestershire Sauce",
-    category: "sauces",
-    subcategory: "condiments",
-    aliases: ["lea and perrins", "worcester sauce"]
-  },
-  {
-    id: "fish-sauce",
-    label: "Fish Sauce",
-    category: "sauces",
-    subcategory: "asian",
-    aliases: ["nam pla", "nuoc mam"]
-  },
-  {
-    id: "hoisin",
-    label: "Hoisin Sauce",
-    category: "sauces",
-    subcategory: "asian",
-    aliases: ["chinese bbq sauce"]
-  },
-  {
-    id: "salsa",
-    label: "Salsa",
-    category: "sauces",
-    subcategory: "condiments",
-    aliases: ["picante", "chunky salsa", "pico de gallo"]
-  },
-  {
-    id: "pesto",
-    label: "Basil Pesto",
-    category: "sauces",
-    subcategory: "dressings",
-    aliases: ["green pesto", "pesto alla genovese", "jar pesto"]
-  },
-  {
     id: "bbq-sauce",
     label: "BBQ Sauce",
     category: "sauces",
@@ -517,7 +516,7 @@ window.PANTRY_INGREDIENTS = [
     label: "Olive Oil",
     category: "staples",
     subcategory: "fats",
-    matchGroups: ["oil"],
+    matchGroups: ["cooking-oil", "oil"],
     aliases: ["extra virgin olive oil", "evoo", "cooking oil"]
   },
   {
@@ -525,7 +524,7 @@ window.PANTRY_INGREDIENTS = [
     label: "Vegetable / Canola Oil",
     category: "staples",
     subcategory: "fats",
-    matchGroups: ["oil"],
+    matchGroups: ["cooking-oil", "oil"],
     aliases: ["canola oil", "vegetable oil", "sunflower oil", "avocado oil", "cooking oil"]
   },
   {
@@ -624,13 +623,6 @@ window.PANTRY_INGREDIENTS = [
     aliases: ["dark brown sugar", "light brown sugar"]
   },
   {
-    id: "honey",
-    label: "Honey / Maple Syrup",
-    category: "staples",
-    subcategory: "sweeteners",
-    aliases: ["maple syrup", "pure honey", "agave"]
-  },
-  {
     id: "white-vinegar",
     label: "White Vinegar",
     category: "staples",
@@ -647,42 +639,12 @@ window.PANTRY_INGREDIENTS = [
     aliases: ["acv", "cider vinegar"]
   },
   {
-    id: "red-wine-vinegar",
-    label: "Red Wine Vinegar",
-    category: "staples",
-    subcategory: "acids",
-    matchGroups: ["vinegar"],
-    aliases: ["wine vinegar"]
-  },
-  {
-    id: "white-wine",
-    label: "White Wine (Cooking / Dry)",
-    category: "staples",
-    subcategory: "acids",
-    aliases: ["dry white wine", "cooking wine", "sauvignon blanc", "pinot grigio"]
-  },
-  {
-    id: "red-wine",
-    label: "Red Wine",
-    category: "staples",
-    subcategory: "acids",
-    aliases: ["dry red wine", "cooking red wine", "cabernet", "merlot"]
-  },
-  {
     id: "chicken-broth",
     label: "Chicken Broth / Stock",
     category: "staples",
     subcategory: "broths",
     matchGroups: ["broth"],
     aliases: ["chicken stock", "bouillon", "chicken bouillon cube"]
-  },
-  {
-    id: "vegetable-broth",
-    label: "Vegetable Broth / Stock",
-    category: "staples",
-    subcategory: "broths",
-    matchGroups: ["broth"],
-    aliases: ["veggie broth", "vegetable stock", "veggie stock cube"]
   },
   {
     id: "beef-broth",
@@ -697,6 +659,7 @@ window.PANTRY_INGREDIENTS = [
     label: "Salt",
     category: "staples",
     subcategory: "spices",
+    matchGroups: ["assumed-staple"],
     aliases: ["table salt", "sea salt", "kosher salt", "fine salt"]
   },
   {
@@ -704,6 +667,7 @@ window.PANTRY_INGREDIENTS = [
     label: "Black Pepper",
     category: "staples",
     subcategory: "spices",
+    matchGroups: ["assumed-staple"],
     aliases: ["ground black pepper", "cracked pepper", "black peppercorn", "pepper"]
   },
   {
@@ -742,13 +706,6 @@ window.PANTRY_INGREDIENTS = [
     aliases: ["oregano flakes", "mexican oregano", "italian herbs"]
   },
   {
-    id: "italian-seasoning",
-    label: "Italian Seasoning Blend",
-    category: "staples",
-    subcategory: "spices",
-    aliases: ["mixed herbs", "herbes de provence", "dried basil and oregano"]
-  },
-  {
     id: "curry-powder",
     label: "Curry Powder",
     category: "staples",
@@ -756,31 +713,10 @@ window.PANTRY_INGREDIENTS = [
     aliases: ["madras curry powder", "yellow curry powder", "garam masala"]
   },
   {
-    id: "garlic-powder",
-    label: "Garlic Powder",
-    category: "staples",
-    subcategory: "spices",
-    aliases: ["granulated garlic"]
-  },
-  {
-    id: "onion-powder",
-    label: "Onion Powder",
-    category: "staples",
-    subcategory: "spices",
-    aliases: ["granulated onion"]
-  },
-  {
     id: "red-pepper-flakes",
-    label: "Red Pepper Flakes / Chili Flakes",
+    label: "Red Pepper Flakes",
     category: "staples",
     subcategory: "spices",
     aliases: ["crushed red pepper", "chilli flakes", "pepper flakes"]
-  },
-  {
-    id: "cinnamon",
-    label: "Ground Cinnamon",
-    category: "staples",
-    subcategory: "spices",
-    aliases: ["cinnamon powder", "sweet spice"]
   }
 ];
