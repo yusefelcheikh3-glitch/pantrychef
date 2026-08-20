@@ -202,20 +202,26 @@
     if (state.assumeBasics && isAssumedStaple(ingredientId)) return true;
 
     const reqIng = getIngredientById(ingredientId);
+    const reqGroups = reqIng.matchGroups || [];
 
-    // Parent group checks
-    if (reqIng.matchGroups) {
-      for (const group of reqIng.matchGroups) {
-        if (state.pantry.includes(group)) return true;
-        if (state.assumeBasics && group === "cooking-oil") return true;
-      }
+    // Check if user selected a parent group ID (e.g. user selected "chicken")
+    for (const group of reqGroups) {
+      if (state.pantry.includes(group)) return true;
+      if (state.assumeBasics && group === "cooking-oil") return true;
     }
 
+    // Check if any pantry item shares a matchGroup with required item or matches ID
     for (const pantryId of state.pantry) {
+      if (pantryId === ingredientId) return true;
       const pantryIng = getIngredientById(pantryId);
-      if (pantryIng.matchGroups && pantryIng.matchGroups.includes(ingredientId)) {
-        return true;
-      }
+      const pantryGroups = pantryIng.matchGroups || [];
+
+      if (pantryGroups.includes(ingredientId)) return true;
+      if (reqGroups.includes(pantryId)) return true;
+
+      // Cross-match if they share any common matchGroup (e.g. chicken-breast & chicken-thighs both share "chicken")
+      const commonGroup = reqGroups.some(g => pantryGroups.includes(g));
+      if (commonGroup) return true;
     }
 
     return false;
