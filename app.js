@@ -1782,6 +1782,16 @@ Output strictly valid JSON matching this exact structure with no markdown backti
     });
   }
 
+
+  // --- SERVICE WORKER REGISTRATION ---
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .then(reg => console.log("[PantryChef] Service Worker registered:", reg.scope))
+        .catch(err => console.warn("[PantryChef] SW registration failed:", err));
+    });
+  }
+
   function init() {
     initElements();
     loadState();
