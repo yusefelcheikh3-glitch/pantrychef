@@ -1342,3 +1342,12 @@ body {
   background: linear-gradient(135deg, #FF6B4A, #D35400);
   color: #FFFFFF;
 }
+
+.brand-badge.version-tag {
+  background: var(--paper-deep);
+  color: var(--tomato);
+  font-weight: 800;
+  border: 1px solid var(--line-strong);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
