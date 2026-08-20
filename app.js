@@ -321,7 +321,7 @@
     let badgeClass = "high";
 
     if (weightedScore >= 100 && missingTotal.length === 0) {
-      badgeText = "✓ 100% Ready";
+      badgeText = "100% Ready";
       badgeClass = "perfect";
     } else if (coreScore === 1 && (state.assumeBasics && missingFlavor.length === 0)) {
       badgeText = "95% Ready — basics assumed";
@@ -584,8 +584,8 @@
 
     el.detailTitle.textContent = recipe.title;
     el.detailSubtitle.textContent = recipe.subtitle;
-    el.detailTime.textContent = "⏱️ " + recipe.totalTimeMinutes + " mins (" + recipe.activeTimeMinutes + "m active)";
-    el.detailEquipment.textContent = "🍳 " + recipe.equipment.join(", ");
+    el.detailTime.textContent = "Time: " + recipe.totalTimeMinutes + " mins (" + recipe.activeTimeMinutes + " mins active)";
+    el.detailEquipment.textContent = "Equipment: " + recipe.equipment.join(", ");
 
     el.detailMatchBadge.textContent = matchInfo.badgeText;
     el.detailMatchBadge.className = "hero-tag " + matchInfo.badgeClass;
@@ -644,7 +644,7 @@
 
           const box = document.createElement("div");
           box.className = "sub-box";
-          box.innerHTML = "<div class=\"sub-header\"><span>💡 Swap for " + sub.label + ": " + opt.label + "</span>" + (hasComponents ? "<span style=\"color:var(--success); font-size:0.75rem;\">(You have components!)</span>" : "") + "</div><div class=\"sub-body\"><div><strong>Ratio:</strong> " + opt.ratio + "</div><div><strong>Best for:</strong> " + opt.bestFor + "</div>" + (opt.note ? "<div style=\"font-style:italic; margin-top:4px;\">Note: " + opt.note + "</div>" : "") + "</div><div style=\"display:flex; gap:8px; align-items:center;\"><button class=\"btn btn-primary btn-sm activate-swap-btn\" data-recipe=\"" + recipe.id + "\" data-ing=\"" + ing.ingredientId + "\" data-swap=\"" + opt.id + "\">" + (isCurrentlyActive ? "✓ Using This Swap" : "Use This Swap") + "</button></div>";
+          box.innerHTML = "<div class=\"sub-header\"><span>💡 Swap for " + sub.label + ": " + opt.label + "</span>" + (hasComponents ? "<span style=\"color:var(--success); font-size:0.75rem;\">(You have components!)</span>" : "") + "</div><div class=\"sub-body\"><div><strong>Ratio:</strong> " + opt.ratio + "</div><div><strong>Best for:</strong> " + opt.bestFor + "</div>" + (opt.note ? "<div style=\"font-style:italic; margin-top:4px;\">Note: " + opt.note + "</div>" : "") + "</div><div style=\"display:flex; gap:8px; align-items:center;\"><button class=\"btn btn-primary btn-sm activate-swap-btn\" data-recipe=\"" + recipe.id + "\" data-ing=\"" + ing.ingredientId + "\" data-swap=\"" + opt.id + "\">" + (isCurrentlyActive ? "Using This Swap" : "Use This Swap") + "</button></div>";
 
           box.querySelector(".activate-swap-btn").addEventListener("click", () => {
             if (!state.activeSwaps[recipe.id]) state.activeSwaps[recipe.id] = {};
@@ -721,9 +721,9 @@
     if (step.timer && step.timer.seconds > 0) {
       state.chefTimerInitial = step.timer.seconds;
       state.chefTimerSeconds = step.timer.seconds;
-      el.chefTimerLabel.textContent = "⏱️ " + step.timer.label + " (" + step.timer.cue + ")";
+      el.chefTimerLabel.textContent = "Timer: " + step.timer.label + " (" + step.timer.cue + ")";
       updateTimerDisplay(state.chefTimerSeconds);
-      el.chefTimerStartBtn.textContent = "▶ Start Timer";
+      el.chefTimerStartBtn.textContent = "Start Timer";
       el.chefTimerBox.style.display = "block";
     } else {
       el.chefTimerBox.style.display = "none";
@@ -733,7 +733,7 @@
     el.chefPrevStepBtn.style.opacity = state.chefStepIndex === 0 ? "0.4" : "1";
 
     if (state.chefStepIndex === totalSteps - 1) {
-      el.chefNextStepBtn.textContent = "🎉 Complete Dinner!";
+      el.chefNextStepBtn.textContent = "Complete Dinner";
     } else {
       el.chefNextStepBtn.textContent = "Next Step →";
     }
@@ -749,11 +749,11 @@
     if (state.chefTimerRunning) {
       clearInterval(state.chefTimerInterval);
       state.chefTimerRunning = false;
-      el.chefTimerStartBtn.textContent = "▶ Resume";
+      el.chefTimerStartBtn.textContent = "Resume";
     } else {
       getAudioContext();
       state.chefTimerRunning = true;
-      el.chefTimerStartBtn.textContent = "⏸ Pause";
+      el.chefTimerStartBtn.textContent = "Pause";
 
       state.chefTimerInterval = setInterval(() => {
         state.chefTimerSeconds--;
@@ -762,7 +762,7 @@
         if (state.chefTimerSeconds <= 0) {
           clearInterval(state.chefTimerInterval);
           state.chefTimerRunning = false;
-          el.chefTimerStartBtn.textContent = "✓ Done!";
+          el.chefTimerStartBtn.textContent = "Timer Complete";
           playCompletionChime();
         }
       }, 1000);
@@ -774,7 +774,7 @@
     state.chefTimerRunning = false;
     state.chefTimerSeconds = state.chefTimerInitial;
     updateTimerDisplay(state.chefTimerSeconds);
-    el.chefTimerStartBtn.textContent = "▶ Start Timer";
+    el.chefTimerStartBtn.textContent = "Start Timer";
   }
 
   // --- SHOPPING LIST LOGIC ---
@@ -850,7 +850,7 @@
   function copyShoppingListToClipboard() {
     if (state.shoppingList.length === 0) return;
 
-    let text = "🍳 PantryChef Shopping List\n========================\n\n";
+    let text = "PANTRYCHEF SHOPPING LIST\n========================\n\n";
     const grouped = {};
     state.shoppingList.forEach(item => {
       const ing = getIngredientById(item.ingredientId);
@@ -869,8 +869,8 @@
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
-        el.copyShopListBtn.textContent = "✓ Copied!";
-        setTimeout(() => el.copyShopListBtn.textContent = "📋 Copy to Clipboard", 2000);
+        el.copyShopListBtn.textContent = "Copied to Clipboard";
+        setTimeout(() => el.copyShopListBtn.textContent = "Copy to Clipboard", 2000);
       });
     } else {
       const ta = document.createElement("textarea");
@@ -879,8 +879,8 @@
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
-      el.copyShopListBtn.textContent = "✓ Copied!";
-      setTimeout(() => el.copyShopListBtn.textContent = "📋 Copy to Clipboard", 2000);
+      el.copyShopListBtn.textContent = "Copied to Clipboard";
+      setTimeout(() => el.copyShopListBtn.textContent = "Copy to Clipboard", 2000);
     }
   }
 
@@ -1147,7 +1147,7 @@
 
       const statusEl = document.getElementById("aiStorageStatus");
       if (statusEl) {
-        statusEl.textContent = "✓ Exported " + recipes.length + " recipes to backup file!";
+        statusEl.textContent = "Exported " + recipes.length + " recipes to backup file!";
         setTimeout(() => statusEl.textContent = "", 3500);
       }
     } catch (e) {
@@ -1189,7 +1189,7 @@
 
         const statusEl = document.getElementById("aiStorageStatus");
         if (statusEl) {
-          statusEl.textContent = "✓ Imported " + validCount + " new custom recipes!";
+          statusEl.textContent = "Imported " + validCount + " new custom recipes!";
           setTimeout(() => statusEl.textContent = "", 3500);
         }
         event.target.value = "";
@@ -1209,7 +1209,7 @@
 
       const statusEl = document.getElementById("aiStorageStatus");
       if (statusEl) {
-        statusEl.textContent = "✓ AI recipe history cleared!";
+        statusEl.textContent = "AI recipe history cleared";
         setTimeout(() => statusEl.textContent = "", 3500);
       }
     }
@@ -1312,27 +1312,313 @@ Output strictly valid JSON matching this exact structure with no markdown backti
     } catch (err) {
       console.error("AI Generation Error:", err);
       if (statusText) {
-        statusText.innerHTML = "<span style=\"color:var(--tomato); font-weight:700;\">⚠️ " + (err.message || "Could not generate recipe") + "</span>";
+        statusText.innerHTML = "<span style=\"color:var(--tomato); font-weight:700;\">" + (err.message || "Could not generate recipe") + "</span>";
       }
       if (generateBtn) generateBtn.disabled = false;
     }
   }
 
+
+  // --- SETTINGS MODAL ---
+  function openSettingsModal() {
+    const modal = document.getElementById("settingsModal");
+    if (modal) {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      const keyInput = document.getElementById("customApiKeyInput");
+      const savedKey = localStorage.getItem("pantrychef:ai_key");
+      if (keyInput && savedKey) keyInput.value = savedKey;
+      const statusEl = document.getElementById("settingsStorageStatus");
+      if (statusEl) statusEl.textContent = "";
+      const apiStatus = document.getElementById("apiKeyStatus");
+      if (apiStatus) apiStatus.textContent = "";
+    }
+  }
+
+  function closeSettingsModal() {
+    const modal = document.getElementById("settingsModal");
+    if (modal) {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function saveCustomApiKey() {
+    const input = document.getElementById("customApiKeyInput");
+    const statusEl = document.getElementById("apiKeyStatus");
+    if (!input) return;
+    const val = input.value.trim();
+    if (val) {
+      localStorage.setItem("pantrychef:ai_key", val);
+      if (statusEl) statusEl.textContent = "Custom API key saved.";
+    } else {
+      localStorage.removeItem("pantrychef:ai_key");
+      if (statusEl) statusEl.textContent = "Reset to default integrated key.";
+    }
+    setTimeout(() => { if (statusEl) statusEl.textContent = ""; }, 3500);
+  }
+
+
+  // --- VIEW SWITCHER (SPA Architecture) ---
+  let currentView = "solver";
+  let activeAiStyles = [];
+
+  function switchView(viewName) {
+    currentView = viewName;
+    const solverView = document.getElementById("dinnerSolverView");
+    const aiChefView = document.getElementById("aiChefView");
+    const navSolverBtn = document.getElementById("navSolverBtn");
+    const navAiChefBtn = document.getElementById("navAiChefBtn");
+
+    if (viewName === "ai-chef") {
+      if (solverView) solverView.style.display = "none";
+      if (aiChefView) aiChefView.style.display = "block";
+      if (navSolverBtn) navSolverBtn.classList.remove("active");
+      if (navAiChefBtn) navAiChefBtn.classList.add("active");
+      renderAiPagePills();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      if (solverView) solverView.style.display = "block";
+      if (aiChefView) aiChefView.style.display = "none";
+      if (navSolverBtn) navSolverBtn.classList.add("active");
+      if (navAiChefBtn) navAiChefBtn.classList.remove("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  function renderAiPagePills() {
+    const container = document.getElementById("aiPageSelectedPills");
+    if (!container) return;
+    container.innerHTML = "";
+    if (state.pantry.length === 0) {
+      container.innerHTML = "<span style=\"font-size:0.85rem; color:var(--ink-muted);\">No ingredients selected yet. You can still ask the AI to invent any dinner!</span>";
+      return;
+    }
+    state.pantry.forEach(id => {
+      const ing = getIngredientById(id);
+      const pill = document.createElement("span");
+      pill.className = "tray-pill";
+      pill.textContent = ing.label;
+      container.appendChild(pill);
+    });
+  }
+
+  function renderGeneratedAiRecipeCard(recipe) {
+    const placeholder = document.getElementById("aiResultPlaceholder");
+    const content = document.getElementById("aiResultContent");
+    if (!content) return;
+
+    if (placeholder) placeholder.style.display = "none";
+    content.style.display = "block";
+
+    let ingredientsHtml = "";
+    recipe.ingredients.forEach(ing => {
+      const ingData = getIngredientById(ing.ingredientId);
+      const name = ingData ? ingData.label : ing.ingredientId.replace(/-/g, " ");
+      const qtyStr = ing.qty ? ing.qty + " " + ing.unit : (ing.unit || "");
+      const roleBadge = ing.role === "core" ? " [Core]" : (ing.role === "optional" ? " [Optional]" : "");
+      ingredientsHtml += `<li class="ingredient-item have"><span class="ing-qty">${qtyStr}</span><span class="ing-name">${name} ${ing.note ? "(" + ing.note + ")" : ""}${roleBadge}</span></li>`;
+    });
+
+    let stepsHtml = "";
+    recipe.steps.forEach((step, idx) => {
+      const timerCue = step.timer ? ("<div class='step-timer-cue'>Timer: " + Math.floor(step.timer.seconds / 60) + "m " + (step.timer.seconds % 60) + "s (" + step.timer.cue + ")</div>") : "";
+      stepsHtml += `<div class="step-row"><div class="step-num">${idx + 1}</div><div class="step-content"><div class="step-text"><strong>${step.title ? step.title + ": " : ""}</strong>${step.text}</div>${timerCue}</div></div>`;
+    });
+
+    content.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:12px;">
+        <span class="match-badge ai-badge">AI Custom Dinner</span>
+        <span class="recipe-time-badge">${recipe.totalTimeMinutes} mins</span>
+      </div>
+      <h2 style="font-family:Fraunces,serif; font-size:1.6rem; margin-bottom:6px; color:var(--ink);">${recipe.title}</h2>
+      <p style="font-size:0.95rem; color:var(--ink-soft); margin-bottom:18px;">${recipe.subtitle}</p>
+
+      <div style="margin-bottom:20px;">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--ink); margin-bottom:8px;">Ingredients:</h4>
+        <ul class="ingredient-list" style="margin-bottom:16px;">${ingredientsHtml}</ul>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <h4 style="font-size:0.9rem; font-weight:700; color:var(--ink); margin-bottom:8px;">Method:</h4>
+        <div class="steps-container">${stepsHtml}</div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-primary start-ai-chef-btn" data-id="${recipe.id}">Start Chef Mode</button>
+        <button class="btn btn-secondary view-in-solver-btn">Back to Dinner Solver</button>
+      </div>
+    `;
+
+    content.querySelector(".start-ai-chef-btn").addEventListener("click", () => {
+      openChefMode(recipe.id);
+    });
+
+    content.querySelector(".view-in-solver-btn").addEventListener("click", () => {
+      switchView("solver");
+      renderRecipesGrid();
+    });
+  }
+
+  async function generateFromAiPage() {
+    const promptInput = document.getElementById("aiPageCustomPrompt");
+    const statusBox = document.getElementById("aiPageStatusBox");
+    const statusText = document.getElementById("aiPageStatusText");
+    const genBtn = document.getElementById("aiPageGenerateBtn");
+
+    const pantryLabels = state.pantry.map(id => getIngredientById(id).label);
+    const userNotes = promptInput ? promptInput.value.trim() : "";
+    const styleNotes = activeAiStyles.join(", ");
+
+    if (statusBox) statusBox.style.display = "block";
+    if (statusText) statusText.textContent = "AI Chef is crafting your custom dinner...";
+    if (genBtn) genBtn.disabled = true;
+
+    const combinedRequest = [userNotes, styleNotes ? "Cooking style/mood: " + styleNotes : ""].filter(Boolean).join(". ");
+
+    const systemPrompt = `You are a world-class executive chef. Invent a practical, delicious weeknight dinner recipe using primarily these pantry ingredients: ${pantryLabels.join(", ") || "common kitchen ingredients"}.
+${combinedRequest ? "Specific user request/style: " + combinedRequest : ""}
+Always include simple steps with precise timing cues.
+Output strictly valid JSON matching this exact structure with no markdown backticks:
+{
+  "id": "ai-recipe-${Date.now()}",
+  "title": "Appetizing Recipe Title",
+  "subtitle": "Short 1-sentence mouthwatering description",
+  "moods": ["15-minute", "one-pot", "high-protein"],
+  "totalTimeMinutes": 15,
+  "activeTimeMinutes": 10,
+  "baseServings": 2,
+  "equipment": ["Skillet"],
+  "ingredients": [
+    { "ingredientId": "chicken-breast", "qty": 350, "unit": "g", "role": "core", "note": "diced bite-size" }
+  ],
+  "steps": [
+    { "id": "step-1", "title": "Sear", "text": "Step instructions...", "timer": { "label": "Sear", "seconds": 240, "cue": "golden brown" } }
+  ]
+}`;
+
+    try {
+      const modelCascade = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-2.5-flash"];
+      let rawText = null;
+      let usedModel = null;
+      let lastErr = null;
+
+      for (const model of modelCascade) {
+        try {
+          if (statusText) statusText.textContent = "AI Chef (" + model + ") is crafting your recipe...";
+          const url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + getAiApiKey();
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: systemPrompt }] }],
+              generationConfig: { responseMimeType: "application/json" }
+            })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+              rawText = data.candidates[0].content.parts[0].text;
+              usedModel = model;
+              break;
+            }
+          } else {
+            console.warn("[AI Chef] " + model + " returned " + response.status);
+            if (response.status === 403) {
+              lastErr = new Error("API Key Restricted or Referrer Mismatch (HTTP 403). Check Google Cloud HTTP Referrer settings.");
+            } else if (response.status === 429) {
+              lastErr = new Error("AI Quota Exceeded (HTTP 429). Please try again in a moment.");
+            } else {
+              lastErr = new Error(model + " returned HTTP " + response.status);
+            }
+          }
+        } catch (mErr) {
+          console.warn("[AI Chef] " + model + " failed:", mErr);
+          lastErr = mErr;
+        }
+      }
+
+      if (!rawText) {
+        throw lastErr || new Error("All AI models currently unavailable. Please try again.");
+      }
+
+      const rawJson = JSON.parse(rawText);
+      const sanitizedRecipe = validateAndSanitizeAiRecipe(rawJson);
+      console.log("[AI Chef] Generated on Dedicated Page with:", usedModel, sanitizedRecipe);
+
+      window.PANTRY_RECIPES.unshift(sanitizedRecipe);
+      saveAiRecipe(sanitizedRecipe);
+
+      if (statusBox) statusBox.style.display = "none";
+      if (genBtn) genBtn.disabled = false;
+
+      renderGeneratedAiRecipeCard(sanitizedRecipe);
+
+    } catch (err) {
+      console.error("AI Generation Error:", err);
+      if (statusText) {
+        statusText.innerHTML = "<span style=\"color:var(--tomato); font-weight:700;\">" + (err.message || "Could not generate recipe") + "</span>";
+      }
+      if (genBtn) genBtn.disabled = false;
+    }
+  }
+
   // --- EVENT LISTENERS ---
   function setupEventListeners() {
-    // AI Chef Listeners
+    // View Switcher & AI Chef Page Listeners
     const openAiBtn = document.getElementById("openAiChefBtn");
+    if (openAiBtn) openAiBtn.addEventListener("click", () => switchView("ai-chef"));
+
+    const navSolverBtn = document.getElementById("navSolverBtn");
+    if (navSolverBtn) navSolverBtn.addEventListener("click", () => switchView("solver"));
+
+    const navAiChefBtn = document.getElementById("navAiChefBtn");
+    if (navAiChefBtn) navAiChefBtn.addEventListener("click", () => switchView("ai-chef"));
+
+    const brandHome = document.getElementById("brandHome");
+    if (brandHome) brandHome.addEventListener("click", (e) => { e.preventDefault(); switchView("solver"); });
+
+    const aiBackBtn = document.getElementById("aiBackToSolverBtn");
+    if (aiBackBtn) aiBackBtn.addEventListener("click", () => switchView("solver"));
+
     const trayAiBtn = document.getElementById("trayAiChefBtn");
-    if (trayAiBtn) trayAiBtn.addEventListener("click", openAiChefModal);
-    if (openAiBtn) openAiBtn.addEventListener("click", openAiChefModal);
+    if (trayAiBtn) trayAiBtn.addEventListener("click", () => switchView("ai-chef"));
 
-    const closeAiBtn = document.getElementById("closeAiChefModalBtn");
-    if (closeAiBtn) closeAiBtn.addEventListener("click", closeAiChefModal);
+    const aiPageGenBtn = document.getElementById("aiPageGenerateBtn");
+    if (aiPageGenBtn) aiPageGenBtn.addEventListener("click", generateFromAiPage);
 
-    const closeAiFooterBtn = document.getElementById("closeAiChefFooterBtn");
-    if (closeAiFooterBtn) closeAiFooterBtn.addEventListener("click", closeAiChefModal);
+    // Style chips toggle on AI Page
+    const styleChipsContainer = document.getElementById("aiStyleChips");
+    if (styleChipsContainer) {
+      styleChipsContainer.addEventListener("click", (e) => {
+        const chip = e.target.closest(".style-chip");
+        if (chip) {
+          const styleVal = chip.dataset.style;
+          if (activeAiStyles.includes(styleVal)) {
+            activeAiStyles = activeAiStyles.filter(s => s !== styleVal);
+            chip.classList.remove("active");
+          } else {
+            activeAiStyles.push(styleVal);
+            chip.classList.add("active");
+          }
+        }
+      });
+    }
 
-    const genAiBtn = document.getElementById("generateAiRecipeBtn");
+    // Settings Listeners
+    const openSettingsBtn = document.getElementById("openSettingsBtn");
+    if (openSettingsBtn) openSettingsBtn.addEventListener("click", openSettingsModal);
+
+    const closeSettingsBtn = document.getElementById("closeSettingsModalBtn");
+    if (closeSettingsBtn) closeSettingsBtn.addEventListener("click", closeSettingsModal);
+
+    const closeSettingsFooterBtn = document.getElementById("closeSettingsFooterBtn");
+    if (closeSettingsFooterBtn) closeSettingsFooterBtn.addEventListener("click", closeSettingsModal);
+
+    const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
+    if (saveApiKeyBtn) saveApiKeyBtn.addEventListener("click", saveCustomApiKey);
+
     // v0.5 Backup & Storage Listeners
     const exportBtn = document.getElementById("exportAiRecipesBtn");
     if (exportBtn) exportBtn.addEventListener("click", exportAiRecipes);
@@ -1449,7 +1735,7 @@ Output strictly valid JSON matching this exact structure with no markdown backti
         state.chefStepIndex++;
         renderChefStep();
       } else {
-        alert("🎉 Dinner complete! Enjoy your meal!");
+        alert("Dinner complete! Enjoy your meal.");
         closeChefMode();
       }
     });
