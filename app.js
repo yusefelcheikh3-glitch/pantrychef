@@ -1329,31 +1329,51 @@ Output strictly valid JSON matching this exact structure with no markdown backti
   const totalSlides = 3;
 
   function updateCarousel() {
-    el.carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-    el.carouselDots.forEach((dot, index) => {
-      dot.style.opacity = index === currentSlide ? "1" : "0.3";
-    });
+    const track = document.getElementById("carouselTrack");
+    const dots = document.querySelectorAll("#carouselDots .dot");
+    if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    if (dots) {
+      dots.forEach((dot, index) => {
+        dot.style.opacity = index === currentSlide ? "1" : "0.3";
+      });
+    }
   }
 
-  el.openTourBtn.addEventListener("click", () => {
-    el.tourModal.classList.add("open");
-    currentSlide = 0;
-    updateCarousel();
-  });
+  function initCarousel() {
+    const openTourBtn = document.getElementById("openTourBtn");
+    const tourModal = document.getElementById("tourModal");
+    const closeTourBtn = document.getElementById("closeTourBtn");
+    const carouselPrev = document.getElementById("carouselPrev");
+    const carouselNext = document.getElementById("carouselNext");
 
-  el.closeTourBtn.addEventListener("click", () => {
-    el.tourModal.classList.remove("open");
-  });
+    if (openTourBtn && tourModal) {
+      openTourBtn.addEventListener("click", () => {
+        tourModal.classList.add("open");
+        currentSlide = 0;
+        updateCarousel();
+      });
+    }
 
-  el.carouselPrev.addEventListener("click", () => {
-    currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
-    updateCarousel();
-  });
+    if (closeTourBtn && tourModal) {
+      closeTourBtn.addEventListener("click", () => {
+        tourModal.classList.remove("open");
+      });
+    }
 
-  el.carouselNext.addEventListener("click", () => {
-    currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
-    updateCarousel();
-  });
+    if (carouselPrev) {
+      carouselPrev.addEventListener("click", () => {
+        currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
+        updateCarousel();
+      });
+    }
+
+    if (carouselNext) {
+      carouselNext.addEventListener("click", () => {
+        currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+        updateCarousel();
+      });
+    }
+  }
 
   // --- SETTINGS MODAL ---
   function openSettingsModal() {
@@ -1602,6 +1622,8 @@ Output strictly valid JSON matching this exact structure with no markdown backti
 
   // --- EVENT LISTENERS ---
   function setupEventListeners() {
+    initCarousel();
+
     // View Switcher & AI Chef Page Listeners
     const openAiBtn = document.getElementById("openAiChefBtn");
     if (openAiBtn) openAiBtn.addEventListener("click", () => switchView("ai-chef"));

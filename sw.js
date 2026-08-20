@@ -1,4 +1,4 @@
-const CACHE_NAME = "pantrychef-v0.5.5";
+const CACHE_NAME = "pantrychef-v0.5.6";
 const urlsToCache = [
   "./",
   "./index.html",
