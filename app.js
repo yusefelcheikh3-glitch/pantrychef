@@ -119,61 +119,65 @@
     }
   }
 
-  // --- DOM ELEMENTS ---
-  const el = {
-    ingredientSearch: document.getElementById("ingredientSearch"),
-    searchClearBtn: document.getElementById("searchClearBtn"),
-    assumeBasicsToggle: document.getElementById("assumeBasicsToggle"),
-    categoryTabs: document.getElementById("categoryTabs"),
-    ingredientChips: document.getElementById("ingredientChips"),
-    clearAllPantryBtn: document.getElementById("clearAllPantryBtn"),
-    selectedCountText: document.getElementById("selectedCountText"),
-    matchSummaryText: document.getElementById("matchSummaryText"),
-    selectedPills: document.getElementById("selectedPills"),
-    moodFiltersBar: document.getElementById("moodFiltersBar"),
-    recipesGrid: document.getElementById("recipesGrid"),
-    emptyState: document.getElementById("emptyState"),
+  // --- DOM ELEMENTS (Dynamically populated on init) ---
+  let el = {};
 
-    // Recipe Detail Modal
-    recipeDetailModal: document.getElementById("recipeDetailModal"),
-    closeDetailBtn: document.getElementById("closeDetailBtn"),
-    detailCloseFooterBtn: document.getElementById("detailCloseFooterBtn"),
-    detailTitle: document.getElementById("detailTitle"),
-    detailSubtitle: document.getElementById("detailSubtitle"),
-    detailMatchBadge: document.getElementById("detailMatchBadge"),
-    detailTime: document.getElementById("detailTime"),
-    detailEquipment: document.getElementById("detailEquipment"),
-    detailIngredientList: document.getElementById("detailIngredientList"),
-    detailSubstitutionsSection: document.getElementById("detailSubstitutionsSection"),
-    detailSubstitutionsList: document.getElementById("detailSubstitutionsList"),
-    detailStepsList: document.getElementById("detailStepsList"),
-    detailStartChefBtn: document.getElementById("detailStartChefBtn"),
-    detailAddMissingToShopBtn: document.getElementById("detailAddMissingToShopBtn"),
+  function initElements() {
+    el = {
+      ingredientSearch: document.getElementById("ingredientSearch"),
+      searchClearBtn: document.getElementById("searchClearBtn"),
+      assumeBasicsToggle: document.getElementById("assumeBasicsToggle"),
+      categoryTabs: document.getElementById("categoryTabs"),
+      ingredientChips: document.getElementById("ingredientChips"),
+      clearAllPantryBtn: document.getElementById("clearAllPantryBtn"),
+      selectedCountText: document.getElementById("selectedCountText"),
+      matchSummaryText: document.getElementById("matchSummaryText"),
+      selectedPills: document.getElementById("selectedPills"),
+      moodFiltersBar: document.getElementById("moodFiltersBar"),
+      recipesGrid: document.getElementById("recipesGrid"),
+      emptyState: document.getElementById("emptyState"),
 
-    // Shopping List
-    openShoppingListBtn: document.getElementById("openShoppingListBtn"),
-    shopListCount: document.getElementById("shopListCount"),
-    shoppingListModal: document.getElementById("shoppingListModal"),
-    closeShopModalBtn: document.getElementById("closeShopModalBtn"),
-    shopListContent: document.getElementById("shopListContent"),
-    clearShopListBtn: document.getElementById("clearShopListBtn"),
-    copyShopListBtn: document.getElementById("copyShopListBtn"),
+      // Recipe Detail Modal
+      recipeDetailModal: document.getElementById("recipeDetailModal"),
+      closeDetailBtn: document.getElementById("closeDetailBtn"),
+      detailCloseFooterBtn: document.getElementById("detailCloseFooterBtn"),
+      detailTitle: document.getElementById("detailTitle"),
+      detailSubtitle: document.getElementById("detailSubtitle"),
+      detailMatchBadge: document.getElementById("detailMatchBadge"),
+      detailTime: document.getElementById("detailTime"),
+      detailEquipment: document.getElementById("detailEquipment"),
+      detailIngredientList: document.getElementById("detailIngredientList"),
+      detailSubstitutionsSection: document.getElementById("detailSubstitutionsSection"),
+      detailSubstitutionsList: document.getElementById("detailSubstitutionsList"),
+      detailStepsList: document.getElementById("detailStepsList"),
+      detailStartChefBtn: document.getElementById("detailStartChefBtn"),
+      detailAddMissingToShopBtn: document.getElementById("detailAddMissingToShopBtn"),
 
-    // Chef Mode
-    chefModeOverlay: document.getElementById("chefModeOverlay"),
-    chefRecipeTitle: document.getElementById("chefRecipeTitle"),
-    chefExitBtn: document.getElementById("chefExitBtn"),
-    chefStepIndicator: document.getElementById("chefStepIndicator"),
-    chefStepTitle: document.getElementById("chefStepTitle"),
-    chefStepText: document.getElementById("chefStepText"),
-    chefTimerBox: document.getElementById("chefTimerBox"),
-    chefTimerLabel: document.getElementById("chefTimerLabel"),
-    chefTimerDisplay: document.getElementById("chefTimerDisplay"),
-    chefTimerStartBtn: document.getElementById("chefTimerStartBtn"),
-    chefTimerResetBtn: document.getElementById("chefTimerResetBtn"),
-    chefPrevStepBtn: document.getElementById("chefPrevStepBtn"),
-    chefNextStepBtn: document.getElementById("chefNextStepBtn")
-  };
+      // Shopping List
+      openShoppingListBtn: document.getElementById("openShoppingListBtn"),
+      shopListCount: document.getElementById("shopListCount"),
+      shoppingListModal: document.getElementById("shoppingListModal"),
+      closeShopModalBtn: document.getElementById("closeShopModalBtn"),
+      shopListContent: document.getElementById("shopListContent"),
+      clearShopListBtn: document.getElementById("clearShopListBtn"),
+      copyShopListBtn: document.getElementById("copyShopListBtn"),
+
+      // Chef Mode
+      chefModeOverlay: document.getElementById("chefModeOverlay"),
+      chefRecipeTitle: document.getElementById("chefRecipeTitle"),
+      chefExitBtn: document.getElementById("chefExitBtn"),
+      chefStepIndicator: document.getElementById("chefStepIndicator"),
+      chefStepTitle: document.getElementById("chefStepTitle"),
+      chefStepText: document.getElementById("chefStepText"),
+      chefTimerBox: document.getElementById("chefTimerBox"),
+      chefTimerLabel: document.getElementById("chefTimerLabel"),
+      chefTimerDisplay: document.getElementById("chefTimerDisplay"),
+      chefTimerStartBtn: document.getElementById("chefTimerStartBtn"),
+      chefTimerResetBtn: document.getElementById("chefTimerResetBtn"),
+      chefPrevStepBtn: document.getElementById("chefPrevStepBtn"),
+      chefNextStepBtn: document.getElementById("chefNextStepBtn")
+    };
+  }
 
   // --- INGREDIENT & MATCH LOGIC ---
 
@@ -1629,20 +1633,22 @@ Output strictly valid JSON matching this exact structure with no markdown backti
     const clearAiBtn = document.getElementById("clearAiRecipesBtn");
     if (clearAiBtn) clearAiBtn.addEventListener("click", clearAiRecipesHistory);
 
-    if (genAiBtn) genAiBtn.addEventListener("click", generateCustomAiRecipe);
+    if (el.ingredientSearch) {
+      el.ingredientSearch.addEventListener("input", (e) => {
+        state.searchQuery = e.target.value;
+        if (el.searchClearBtn) el.searchClearBtn.style.display = state.searchQuery ? "block" : "none";
+        renderIngredientChips();
+      });
+    }
 
-    el.ingredientSearch.addEventListener("input", (e) => {
-      state.searchQuery = e.target.value;
-      el.searchClearBtn.style.display = state.searchQuery ? "block" : "none";
-      renderIngredientChips();
-    });
-
-    el.searchClearBtn.addEventListener("click", () => {
-      state.searchQuery = "";
-      el.ingredientSearch.value = "";
-      el.searchClearBtn.style.display = "none";
-      renderIngredientChips();
-    });
+    if (el.searchClearBtn) {
+      el.searchClearBtn.addEventListener("click", () => {
+        state.searchQuery = "";
+        if (el.ingredientSearch) el.ingredientSearch.value = "";
+        el.searchClearBtn.style.display = "none";
+        renderIngredientChips();
+      });
+    }
 
     if (el.assumeBasicsToggle) {
       el.assumeBasicsToggle.checked = state.assumeBasics;
@@ -1653,31 +1659,37 @@ Output strictly valid JSON matching this exact structure with no markdown backti
       });
     }
 
-    el.categoryTabs.addEventListener("click", (e) => {
-      const tab = e.target.closest(".cat-tab");
-      if (tab) {
-        state.currentCategory = tab.dataset.category;
-        renderCategoryTabs();
-        renderIngredientChips();
-      }
-    });
+    if (el.categoryTabs) {
+      el.categoryTabs.addEventListener("click", (e) => {
+        const tab = e.target.closest(".cat-tab");
+        if (tab) {
+          state.currentCategory = tab.dataset.category;
+          renderCategoryTabs();
+          renderIngredientChips();
+        }
+      });
+    }
 
-    el.clearAllPantryBtn.addEventListener("click", () => {
-      if (confirm("Clear all selected pantry ingredients?")) {
-        state.pantry = [];
-        saveState();
-        renderIngredientChips();
-        renderSelectedTray();
-        renderRecipesGrid();
-      }
-    });
+    if (el.clearAllPantryBtn) {
+      el.clearAllPantryBtn.addEventListener("click", () => {
+        if (confirm("Clear all selected pantry ingredients?")) {
+          state.pantry = [];
+          saveState();
+          renderIngredientChips();
+          renderSelectedTray();
+          renderRecipesGrid();
+        }
+      });
+    }
 
-    el.moodFiltersBar.addEventListener("click", (e) => {
-      const chip = e.target.closest(".mood-chip");
-      if (chip) {
-        toggleMoodFilter(chip.dataset.mood);
-      }
-    });
+    if (el.moodFiltersBar) {
+      el.moodFiltersBar.addEventListener("click", (e) => {
+        const chip = e.target.closest(".mood-chip");
+        if (chip) {
+          toggleMoodFilter(chip.dataset.mood);
+        }
+      });
+    }
 
     document.querySelectorAll(".servings-control .servings-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
@@ -1695,63 +1707,83 @@ Output strictly valid JSON matching this exact structure with no markdown backti
       });
     });
 
-    el.closeDetailBtn.addEventListener("click", closeRecipeDetail);
-    el.detailCloseFooterBtn.addEventListener("click", closeRecipeDetail);
-    el.detailStartChefBtn.addEventListener("click", () => {
-      if (state.selectedRecipeId) openChefMode(state.selectedRecipeId);
-    });
-    el.detailAddMissingToShopBtn.addEventListener("click", () => {
-      if (state.selectedRecipeId) addMissingIngredientsToShopList(state.selectedRecipeId);
-    });
+    if (el.closeDetailBtn) el.closeDetailBtn.addEventListener("click", closeRecipeDetail);
+    if (el.detailCloseFooterBtn) el.detailCloseFooterBtn.addEventListener("click", closeRecipeDetail);
+    if (el.detailStartChefBtn) {
+      el.detailStartChefBtn.addEventListener("click", () => {
+        if (state.selectedRecipeId) openChefMode(state.selectedRecipeId);
+      });
+    }
+    if (el.detailAddMissingToShopBtn) {
+      el.detailAddMissingToShopBtn.addEventListener("click", () => {
+        if (state.selectedRecipeId) addMissingIngredientsToShopList(state.selectedRecipeId);
+      });
+    }
 
-    el.openShoppingListBtn.addEventListener("click", () => {
-      renderShoppingListModal();
-      el.shoppingListModal.classList.add("open");
-      el.shoppingListModal.setAttribute("aria-hidden", "false");
-    });
-    el.closeShopModalBtn.addEventListener("click", () => {
-      el.shoppingListModal.classList.remove("open");
-      el.shoppingListModal.setAttribute("aria-hidden", "true");
-    });
-    el.clearShopListBtn.addEventListener("click", () => {
-      if (confirm("Clear the shopping list?")) {
-        state.shoppingList = [];
-        saveState();
-        renderShoppingListBadge();
+    if (el.openShoppingListBtn) {
+      el.openShoppingListBtn.addEventListener("click", () => {
         renderShoppingListModal();
-      }
-    });
-    el.copyShopListBtn.addEventListener("click", copyShoppingListToClipboard);
+        if (el.shoppingListModal) {
+          el.shoppingListModal.classList.add("open");
+          el.shoppingListModal.setAttribute("aria-hidden", "false");
+        }
+      });
+    }
+    if (el.closeShopModalBtn) {
+      el.closeShopModalBtn.addEventListener("click", () => {
+        if (el.shoppingListModal) {
+          el.shoppingListModal.classList.remove("open");
+          el.shoppingListModal.setAttribute("aria-hidden", "true");
+        }
+      });
+    }
+    if (el.clearShopListBtn) {
+      el.clearShopListBtn.addEventListener("click", () => {
+        if (confirm("Clear the shopping list?")) {
+          state.shoppingList = [];
+          saveState();
+          renderShoppingListBadge();
+          renderShoppingListModal();
+        }
+      });
+    }
+    if (el.copyShopListBtn) el.copyShopListBtn.addEventListener("click", copyShoppingListToClipboard);
 
-    el.chefExitBtn.addEventListener("click", closeChefMode);
-    el.chefPrevStepBtn.addEventListener("click", () => {
-      if (state.chefStepIndex > 0) {
-        state.chefStepIndex--;
-        renderChefStep();
-      }
-    });
-    el.chefNextStepBtn.addEventListener("click", () => {
-      if (state.chefStepIndex < state.chefRecipe.steps.length - 1) {
-        state.chefStepIndex++;
-        renderChefStep();
-      } else {
-        alert("Dinner complete! Enjoy your meal.");
-        closeChefMode();
-      }
-    });
-    el.chefTimerStartBtn.addEventListener("click", toggleChefTimer);
-    el.chefTimerResetBtn.addEventListener("click", resetChefTimer);
+    if (el.chefExitBtn) el.chefExitBtn.addEventListener("click", closeChefMode);
+    if (el.chefPrevStepBtn) {
+      el.chefPrevStepBtn.addEventListener("click", () => {
+        if (state.chefStepIndex > 0) {
+          state.chefStepIndex--;
+          renderChefStep();
+        }
+      });
+    }
+    if (el.chefNextStepBtn) {
+      el.chefNextStepBtn.addEventListener("click", () => {
+        if (state.chefStepIndex < state.chefRecipe.steps.length - 1) {
+          state.chefStepIndex++;
+          renderChefStep();
+        } else {
+          alert("Dinner complete! Enjoy your meal.");
+          closeChefMode();
+        }
+      });
+    }
+    if (el.chefTimerStartBtn) el.chefTimerStartBtn.addEventListener("click", toggleChefTimer);
+    if (el.chefTimerResetBtn) el.chefTimerResetBtn.addEventListener("click", resetChefTimer);
 
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeRecipeDetail();
-        el.shoppingListModal.classList.remove("open");
+        if (el.shoppingListModal) el.shoppingListModal.classList.remove("open");
+        closeSettingsModal();
         if (state.chefActive) closeChefMode();
       }
     });
   }
 
   function init() {
+    initElements();
     loadState();
     loadAiRecipes();
     setupEventListeners();
