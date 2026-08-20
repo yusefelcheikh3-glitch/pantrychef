@@ -1,157 +1,357 @@
 /**
- * PantryChef Curated Starter Recipes
- * Complete recipe schema with timers, scalable quantities, equipment, and mood tags
+ * PantryChef Recipe Database (v1.1 Expanded 27-Recipe Library)
+ * Categorized with Core, Flavor, Staple, and Optional ingredient roles
  */
 window.PANTRY_RECIPES = [
   {
-    id: "garlic-butter-chicken-rice-skillet",
-    title: "Garlic Butter Chicken Rice Skillet",
-    subtitle: "Golden seared chicken tossed with fragrant garlic butter, tender rice, and wilted greens.",
+    id: "two-ingredient-salsa-chicken",
+    title: "Two-Ingredient Juicy Salsa Chicken",
+    subtitle: "Tender chicken simmered in rich zesty salsa. The ultimate weeknight dinner hack.",
     moods: ["15-minute", "one-pot", "high-protein", "budget"],
     totalTimeMinutes: 15,
-    activeTimeMinutes: 15,
+    activeTimeMinutes: 5,
     baseServings: 2,
-    equipment: ["Large skillet", "Wooden spoon"],
+    equipment: ["Medium skillet with lid"],
     ingredients: [
-      {
-        ingredientId: "chicken-thighs",
-        qty: 350,
-        unit: "g",
-        note: "cut into bite-size pieces",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "olive-oil",
-        qty: 1,
-        unit: "tbsp",
-        note: "for searing",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 3,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "butter",
-        qty: 2,
-        unit: "tbsp",
-        note: "rich finishing butter",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "chicken-broth",
-        qty: 60,
-        unit: "ml",
-        note: "or water + pinch salt",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "rice",
-        qty: 300,
-        unit: "g",
-        note: "cooked or quick microwave rice",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "spinach",
-        qty: 60,
-        unit: "g",
-        note: "or chopped greens",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "paprika",
-        qty: 1,
-        unit: "tsp",
-        note: "sweet or smoked",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      },
-      {
-        ingredientId: "black-pepper",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
+      { ingredientId: "chicken-breast", qty: 350, unit: "g", role: "core", note: "cut into bite-size pieces" },
+      { ingredientId: "salsa", qty: 200, unit: "g", role: "core", note: "mild or medium chunky salsa" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "cheese", qty: 40, unit: "g", role: "optional", note: "shredded on top" },
+      { ingredientId: "rice", qty: 200, unit: "g", role: "optional", note: "for serving" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Season Chicken",
-        text: "Pat chicken pieces dry with a paper towel. Season generously on all sides with paprika, 1/2 tsp salt, and cracked black pepper.",
-        timer: null,
-        ingredients: ["chicken-thighs", "paprika", "salt", "black-pepper"]
+        title: "Sear Chicken",
+        text: "Heat oil in skillet over medium-high heat. Add bite-size chicken pieces and sear for 3 minutes until lightly golden.",
+        timer: { label: "Sear", seconds: 180, cue: "lightly golden" }
       },
       {
         id: "step-2",
-        title: "Sear to Golden",
-        text: "Heat olive oil in your skillet over medium-high heat until shimmering. Add chicken in a single layer and sear undisturbed until deep golden crust forms.",
-        timer: {
-          label: "Sear Chicken",
-          seconds: 240,
-          cue: "flip once browned"
-        },
-        ingredients: ["chicken-thighs", "olive-oil"]
+        title: "Simmer in Salsa",
+        text: "Pour salsa directly over chicken. Cover with lid, turn heat to medium-low, and let bubble until chicken is tender and juicy.",
+        timer: { label: "Simmer", seconds: 420, cue: "chicken fully cooked" }
       },
       {
         id: "step-3",
-        title: "Fragrant Garlic",
-        text: "Turn down heat to medium. Drop in minced garlic, stirring constantly for 30 seconds until aromatic and sweet (do not let it burn).",
-        timer: {
-          label: "Sauté Garlic",
-          seconds: 30,
-          cue: "smells sweet & fragrant"
-        },
-        ingredients: ["garlic"]
+        title: "Melt & Serve",
+        text: "Top with shredded cheese if you have it. Serve over fluffy rice or with warm tortillas!",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "honey-garlic-chicken",
+    title: "Three-Ingredient Honey Garlic Chicken",
+    subtitle: "Crisp golden chicken bites glazed in a sticky, sweet-and-savory caramelized garlic sauce.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 15,
+    baseServings: 2,
+    equipment: ["Large skillet"],
+    ingredients: [
+      { ingredientId: "chicken-thighs", qty: 350, unit: "g", role: "core", note: "cut bite-size" },
+      { ingredientId: "honey", qty: 3, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 4, unit: "clove", role: "core", note: "minced" },
+      { ingredientId: "soy-sauce", qty: 2, unit: "tbsp", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "scallions", qty: 2, unit: "whole", role: "optional", note: "sliced" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sear Chicken",
+        text: "Season chicken with salt and pepper. Heat oil in skillet over high heat; sear chicken pieces until golden and cooked through.",
+        timer: { label: "Sear", seconds: 300, cue: "golden brown" }
       },
       {
-        id: "step-4",
-        title: "Pan Sauce Glaze",
-        text: "Pour in chicken broth and add butter. Scrape up all delicious caramelized browned bits from the bottom of the pan with your spoon. Let bubble rapidly.",
-        timer: {
-          label: "Simmer Glaze",
-          seconds: 60,
-          cue: "glossy butter sauce"
-        },
-        ingredients: ["butter", "chicken-broth"]
+        id: "step-2",
+        title: "Glaze & Caramelize",
+        text: "Add minced garlic, honey, and soy sauce to the pan. Toss continuously over medium heat as the honey bubbles into a thick, glossy lacquer.",
+        timer: { label: "Caramelize Glaze", seconds: 120, cue: "thick & sticky" }
       },
       {
-        id: "step-5",
-        title: "Toss Rice & Greens",
-        text: "Fold in the cooked rice and spinach. Toss continuously over medium heat until rice absorbs the savory pan sauce and spinach wilts gently.",
-        timer: {
-          label: "Warm & Wilt",
-          seconds: 120,
-          cue: "spinach fully wilted"
-        },
-        ingredients: ["rice", "spinach"]
+        id: "step-3",
+        title: "Serve",
+        text: "Spoon over hot rice and top with sliced green scallions.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "three-ingredient-teriyaki-salmon",
+    title: "Three-Ingredient Sweet Teriyaki Salmon",
+    subtitle: "Pan-seared tender salmon fillets glazed with sweet caramelized soy sauce.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Skillet", "Tongs"],
+    ingredients: [
+      { ingredientId: "salmon", qty: 2, unit: "whole", role: "core", note: "fillets" },
+      { ingredientId: "soy-sauce", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "honey", qty: 1.5, unit: "tbsp", role: "core", note: "or brown sugar" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "garlic", qty: 1, unit: "clove", role: "flavor", note: "optional aromatics" },
+      { ingredientId: "rice", qty: 250, unit: "g", role: "optional", note: "for serving" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sear Salmon",
+        text: "Heat oil in skillet over medium-high heat. Place salmon fillets in pan and sear for 4 minutes until crust is golden.",
+        timer: { label: "Sear Salmon", seconds: 240, cue: "crispy crust" }
       },
       {
-        id: "step-6",
-        title: "Finish & Serve",
-        text: "Taste a spoonful. Add an extra pinch of salt, pepper, or squeeze of lemon if desired. Serve steaming hot straight from the skillet!",
-        timer: null,
-        ingredients: ["salt", "black-pepper"]
+        id: "step-2",
+        title: "Flip & Glaze",
+        text: "Flip salmon. Add soy sauce and honey directly into the pan. Spoon the bubbling glaze over the salmon until cooked through.",
+        timer: { label: "Glaze Simmer", seconds: 120, cue: "sauce thickens" }
+      },
+      {
+        id: "step-3",
+        title: "Plate",
+        text: "Drizzle pan sauce over salmon and serve immediately with rice.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "beef-and-broccoli",
+    title: "15-Minute Savory Beef & Broccoli",
+    subtitle: "Crispy browned beef tossed with tender broccoli florets in a savory garlic-soy pan glaze.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 15,
+    baseServings: 2,
+    equipment: ["Large skillet or wok"],
+    ingredients: [
+      { ingredientId: "ground-beef", qty: 350, unit: "g", role: "core", note: "or sliced beef" },
+      { ingredientId: "broccoli", qty: 200, unit: "g", role: "core", note: "cut into bite-size florets" },
+      { ingredientId: "soy-sauce", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 3, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "brown-sugar", qty: 1, unit: "tbsp", role: "flavor", note: "or honey" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Brown Beef",
+        text: "Brown beef in skillet over high heat with oil for 4 minutes until deeply caramelized.",
+        timer: { label: "Brown Beef", seconds: 240, cue: "crispy browned bits" }
+      },
+      {
+        id: "step-2",
+        title: "Steam-Fry Broccoli",
+        text: "Add broccoli florets, garlic, and 2 tbsp water. Cover for 2 minutes to steam-cook broccoli tender-crisp.",
+        timer: { label: "Steam Broccoli", seconds: 120, cue: "vibrant green" }
+      },
+      {
+        id: "step-3",
+        title: "Toss in Sauce",
+        text: "Uncover, pour in soy sauce and brown sugar, and toss for 1 minute until sauce glazes the beef and broccoli.",
+        timer: { label: "Glaze Toss", seconds: 60, cue: "glossy & coated" }
+      }
+    ]
+  },
+  {
+    id: "pesto-pasta",
+    title: "10-Minute Basil Pesto Pasta",
+    subtitle: "Hot al dente pasta swirled with fragrant basil pesto and creamy parmesan.",
+    moods: ["15-minute", "budget", "one-pot"],
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
+    baseServings: 2,
+    equipment: ["Pot", "Tongs"],
+    ingredients: [
+      { ingredientId: "pasta", qty: 220, unit: "g", role: "core", note: "penne, spaghetti, or fusilli" },
+      { ingredientId: "pesto", qty: 4, unit: "tbsp", role: "core", note: "green basil pesto" },
+      { ingredientId: "parmesan", qty: 25, unit: "g", role: "flavor", note: "grated" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "cherry-tomatoes", qty: 80, unit: "g", role: "optional", note: "halved" },
+      { ingredientId: "spinach", qty: 40, unit: "g", role: "optional" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Boil Pasta",
+        text: "Boil pasta in salted water until al dente. Reserve 1/4 cup pasta water before draining.",
+        timer: { label: "Boil Pasta", seconds: 540, cue: "al dente" }
+      },
+      {
+        id: "step-2",
+        title: "Toss with Pesto",
+        text: "Off heat, stir pesto and 2 tbsp pasta water into the hot pasta until silky and glossy.",
+        timer: null
+      },
+      {
+        id: "step-3",
+        title: "Finish with Cheese",
+        text: "Fold in parmesan and fresh cherry tomatoes if using. Serve warm.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "butter-garlic-noodles",
+    title: "Comforting Garlic Butter Noodles",
+    subtitle: "Silky noodles coated in a rich emulsion of melted butter, golden toasted garlic, and parmesan.",
+    moods: ["15-minute", "budget", "one-pot"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Medium pot or skillet"],
+    ingredients: [
+      { ingredientId: "pasta", qty: 200, unit: "g", role: "core", note: "spaghetti, ramen noodles, or penne" },
+      { ingredientId: "butter", qty: 3, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 4, unit: "clove", role: "core", note: "minced" },
+      { ingredientId: "parmesan", qty: 30, unit: "g", role: "flavor", note: "or cheddar swap" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "red-pepper-flakes", qty: 0.5, unit: "tsp", role: "optional" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Cook Noodles",
+        text: "Boil pasta until al dente. Save 1/3 cup starchy cooking water and drain.",
+        timer: { label: "Boil Noodles", seconds: 480, cue: "tender with bite" }
+      },
+      {
+        id: "step-2",
+        title: "Sizzle Garlic Butter",
+        text: "Melt butter in the warm pot over medium-low heat. Add garlic and sizzle gently for 60 seconds until sweet and aromatic.",
+        timer: { label: "Sizzle Garlic", seconds: 60, cue: "fragrant" }
+      },
+      {
+        id: "step-3",
+        title: "Emulsify",
+        text: "Toss hot noodles into the garlic butter with reserved water and parmesan. Swirl until creamy and saucy!",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "tuscan-chicken",
+    title: "Creamy Tuscan Garlic Chicken",
+    subtitle: "Golden chicken breast simmered with sweet tomatoes and wilted spinach in a velvety garlic cream sauce.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 16,
+    activeTimeMinutes: 16,
+    baseServings: 2,
+    equipment: ["Large skillet"],
+    ingredients: [
+      { ingredientId: "chicken-breast", qty: 350, unit: "g", role: "core", note: "sliced into cutlets" },
+      { ingredientId: "canned-tomatoes", qty: 200, unit: "g", role: "core", note: "or cherry tomatoes" },
+      { ingredientId: "spinach", qty: 60, unit: "g", role: "core" },
+      { ingredientId: "heavy-cream", qty: 80, unit: "ml", role: "core", note: "or milk+butter swap" },
+      { ingredientId: "garlic", qty: 3, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "parmesan", qty: 25, unit: "g", role: "flavor" },
+      { ingredientId: "olive-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Pan Sear Chicken",
+        text: "Season chicken with salt and pepper. Heat oil in skillet and sear for 4 minutes per side until golden.",
+        timer: { label: "Sear Chicken", seconds: 360, cue: "golden crust" }
+      },
+      {
+        id: "step-2",
+        title: "Build Cream Sauce",
+        text: "Remove chicken. Add garlic, tomatoes, and cream to the skillet. Simmer for 2 minutes until bubbling.",
+        timer: { label: "Simmer Sauce", seconds: 120, cue: "thick cream" }
+      },
+      {
+        id: "step-3",
+        title: "Wilt Spinach & Combine",
+        text: "Fold in spinach and parmesan until wilted. Return chicken into the sauce and spoon over.",
+        timer: { label: "Wilt & Warm", seconds: 60, cue: "sauce clings" }
+      }
+    ]
+  },
+  {
+    id: "sheet-pan-sausage-peppers",
+    title: "Sheet-Pan Smoky Sausage & Peppers",
+    subtitle: "Juicy sliced sausage and sweet bell peppers roasted to caramelized perfection with minimal dish cleanup.",
+    moods: ["one-pot", "clean-fridge", "high-protein"],
+    totalTimeMinutes: 20,
+    activeTimeMinutes: 5,
+    baseServings: 2,
+    equipment: ["Baking sheet or large skillet"],
+    ingredients: [
+      { ingredientId: "sausage", qty: 300, unit: "g", role: "core", note: "sliced thick" },
+      { ingredientId: "bell-pepper", qty: 2, unit: "whole", role: "core", note: "sliced into strips" },
+      { ingredientId: "onion", qty: 1, unit: "whole", role: "core", note: "sliced into wedges" },
+      { ingredientId: "olive-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "paprika", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "potatoes", qty: 2, unit: "whole", role: "optional", note: "diced" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Toss on Pan",
+        text: "Toss sliced sausage, bell peppers, and onion wedges on a baking sheet (or skillet) with oil, paprika, and a pinch of salt.",
+        timer: null
+      },
+      {
+        id: "step-2",
+        title: "Roast or Sizzle",
+        text: "Roast in 200°C (400°F) oven or cook in a large skillet over high heat until edges are blistered and caramelized.",
+        timer: { label: "Roast / Sear", seconds: 720, cue: "charred & juicy" }
+      },
+      {
+        id: "step-3",
+        title: "Serve",
+        text: "Serve immediately with rice, crusty bread, or straight from the pan.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "shakshuka",
+    title: "Classic Shakshuka (Eggs in Tomato Glaze)",
+    subtitle: "Gently poached eggs in a rich, bubbling garlic-tomato sauce spiced with smoked paprika.",
+    moods: ["one-pot", "budget", "high-protein"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 5,
+    baseServings: 2,
+    equipment: ["Skillet with lid"],
+    ingredients: [
+      { ingredientId: "eggs", qty: 4, unit: "whole", role: "core" },
+      { ingredientId: "canned-tomatoes", qty: 400, unit: "g", role: "core", note: "diced or crushed" },
+      { ingredientId: "paprika", qty: 1.5, unit: "tsp", role: "core", note: "or smoked paprika" },
+      { ingredientId: "onion", qty: 0.5, unit: "whole", role: "flavor", note: "diced" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "olive-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "bread", qty: 2, unit: "slice", role: "optional", note: "for dipping" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sizzle Spiced Sauce",
+        text: "Heat oil in skillet. Sauté onion and garlic for 2 minutes, then pour in tomatoes and paprika with a pinch of salt. Simmer 4 minutes.",
+        timer: { label: "Simmer Sauce", seconds: 240, cue: "thick bubbling sauce" }
+      },
+      {
+        id: "step-2",
+        title: "Poach Eggs",
+        text: "Make 4 small wells in the sauce. Crack eggs into the wells. Cover skillet with lid and cook over medium-low heat until whites are set and yolks are runny.",
+        timer: { label: "Poach Eggs", seconds: 300, cue: "runny yolks, set whites" }
+      },
+      {
+        id: "step-3",
+        title: "Serve with Toast",
+        text: "Dip warm crusty bread into the runny yolks and savory tomato sauce.",
+        timer: null
       }
     ]
   },
@@ -160,489 +360,80 @@ window.PANTRY_RECIPES = [
     title: "Clean-the-Fridge Golden Fried Rice",
     subtitle: "The ultimate 10-minute dinner for leftover rice, scrambled eggs, savory soy, and whatever veggies are in your crisper.",
     moods: ["15-minute", "one-pot", "budget", "clean-fridge"],
-    totalTimeMinutes: 12,
-    activeTimeMinutes: 12,
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
     baseServings: 2,
-    equipment: ["Large skillet or wok", "Spatula"],
+    equipment: ["Large skillet or wok"],
     ingredients: [
-      {
-        ingredientId: "rice",
-        qty: 350,
-        unit: "g",
-        note: "cold leftover or quick cooked rice",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "eggs",
-        qty: 3,
-        unit: "whole",
-        note: "lightly beaten",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 2,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "onion",
-        qty: 0.5,
-        unit: "whole",
-        note: "or 2 scallions, diced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "soy-sauce",
-        qty: 2,
-        unit: "tbsp",
-        note: "light or all-purpose",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "neutral-oil",
-        qty: 2,
-        unit: "tbsp",
-        note: "or butter / olive oil",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "frozen-peas",
-        qty: 80,
-        unit: "g",
-        note: "or corn / diced carrots / chopped greens",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "black-pepper",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
+      { ingredientId: "rice", qty: 350, unit: "g", role: "core", note: "cold leftover or quick cooked rice" },
+      { ingredientId: "eggs", qty: 3, unit: "whole", role: "core", note: "lightly beaten" },
+      { ingredientId: "soy-sauce", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "onion", qty: 0.5, unit: "whole", role: "flavor", note: "diced" },
+      { ingredientId: "neutral-oil", qty: 2, unit: "tbsp", role: "staple" },
+      { ingredientId: "frozen-peas", qty: 80, unit: "g", role: "optional" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Scramble Eggs",
-        text: "Heat 1 tbsp oil in skillet over high heat. Pour in beaten eggs. Swirl and scramble for 45 seconds until just softly set. Transfer eggs to a plate.",
-        timer: {
-          label: "Soft Scramble",
-          seconds: 45,
-          cue: "tender curds"
-        },
-        ingredients: ["eggs", "neutral-oil"]
+        title: "Soft Scramble Eggs",
+        text: "Heat 1 tbsp oil in pan. Scramble beaten eggs for 45 seconds until soft. Set aside.",
+        timer: { label: "Scramble", seconds: 45, cue: "soft curds" }
       },
       {
         id: "step-2",
-        title: "Aromatics & Veggies",
-        text: "Add remaining 1 tbsp oil to pan. Toss in diced onion, garlic, and frozen peas (or whatever chopped vegetables you have). Stir-fry over high heat.",
-        timer: {
-          label: "Sizzle Veggies",
-          seconds: 90,
-          cue: "onions translucent"
-        },
-        ingredients: ["onion", "garlic", "frozen-peas", "neutral-oil"]
+        title: "Fry Rice",
+        text: "Add remaining oil and fry rice over screaming high heat with garlic and onion for 2 minutes.",
+        timer: { label: "Fry Rice", seconds: 120, cue: "toasted grains" }
       },
       {
         id: "step-3",
-        title: "Fry & Toast Rice",
-        text: "Add the rice into the screaming hot pan, breaking up any clumps with your spatula. Let the rice sit against the pan for 1 minute to toast and get slightly crispy.",
-        timer: {
-          label: "Toast Rice",
-          seconds: 120,
-          cue: "rice starts popping"
-        },
-        ingredients: ["rice"]
-      },
-      {
-        id: "step-4",
-        title: "Season & Combine",
-        text: "Drizzle soy sauce around the outer perimeter of the skillet so it caramelizes immediately. Toss the cooked scrambled eggs back into the rice, folding everything together.",
-        timer: {
-          label: "High Heat Toss",
-          seconds: 60,
-          cue: "evenly golden brown"
-        },
-        ingredients: ["soy-sauce", "black-pepper"]
-      },
-      {
-        id: "step-5",
-        title: "Serve",
-        text: "Top with sliced scallions, a drizzle of sriracha or sesame oil if available, and serve immediately.",
-        timer: null,
-        ingredients: []
+        title: "Soy Drizzle & Combine",
+        text: "Pour soy sauce around pan edge and fold eggs back in. Toss vigorously for 1 minute and serve.",
+        timer: { label: "Toss", seconds: 60, cue: "golden brown" }
       }
     ]
   },
   {
-    id: "one-pot-tomato-basil-pasta",
-    title: "One-Pot Rich Tomato Basil Pasta",
-    subtitle: "Pasta cooks directly inside a rich tomato-garlic broth, creating an ultra-silky, starchy restaurant sauce with zero colander cleanup.",
-    moods: ["one-pot", "budget", "15-minute"],
-    totalTimeMinutes: 16,
-    activeTimeMinutes: 5,
-    baseServings: 2,
-    equipment: ["Wide deep pot or deep skillet", "Tongs"],
-    ingredients: [
-      {
-        ingredientId: "pasta",
-        qty: 220,
-        unit: "g",
-        note: "spaghetti, linguine, or penne",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "canned-tomatoes",
-        qty: 400,
-        unit: "g",
-        note: "1 can crushed or diced tomatoes",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 3,
-        unit: "clove",
-        note: "thinly sliced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "onion",
-        qty: 0.5,
-        unit: "whole",
-        note: "thinly sliced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "olive-oil",
-        qty: 2,
-        unit: "tbsp",
-        note: "extra virgin for silky sheen",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "oregano",
-        qty: 1,
-        unit: "tsp",
-        note: "or Italian seasoning",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "parmesan",
-        qty: 30,
-        unit: "g",
-        note: "grated for finishing",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "about 1 tsp",
-        optional: false,
-        scalable: false
-      }
-    ],
-    steps: [
-      {
-        id: "step-1",
-        title: "Layer Ingredients",
-        text: "Place dry pasta, canned tomatoes, sliced onion, garlic, oregano, olive oil, and 1 tsp salt directly into the pot. Add 450 ml (about 2 cups) water.",
-        timer: null,
-        ingredients: ["pasta", "canned-tomatoes", "garlic", "onion", "olive-oil", "oregano", "salt"]
-      },
-      {
-        id: "step-2",
-        title: "Bring to Rolling Boil",
-        text: "Cover and bring to a rapid boil over high heat. Once boiling, remove lid and use tongs to submerge and separate pasta strands.",
-        timer: {
-          label: "Boil Up",
-          seconds: 180,
-          cue: "rolling bubbling boil"
-        },
-        ingredients: []
-      },
-      {
-        id: "step-3",
-        title: "Simmer & Reduce Sauce",
-        text: "Cook uncovered over medium-high heat, stirring frequently so pasta does not stick. The pasta starch will thicken the tomatoes and water into a rich glossy sauce.",
-        timer: {
-          label: "Simmer Pasta",
-          seconds: 480,
-          cue: "pasta al dente, sauce thick"
-        },
-        ingredients: []
-      },
-      {
-        id: "step-4",
-        title: "Finish with Cheese",
-        text: "Remove from heat. Fold in grated parmesan (or a splash of cream/butter) and black pepper. Let rest 1 minute to thicken and enjoy!",
-        timer: {
-          label: "Rest & Thicken",
-          seconds: 60,
-          cue: "sauce clings to pasta"
-        },
-        ingredients: ["parmesan", "black-pepper"]
-      }
-    ]
-  },
-  {
-    id: "creamy-tomato-chickpea-curry",
-    title: "15-Minute Creamy Chickpea Curry",
-    subtitle: "Hearty pantry chickpeas simmered in a spiced tomato sauce finished with a swirl of rich cream or yogurt.",
-    moods: ["one-pot", "budget", "high-protein", "clean-fridge", "15-minute"],
+    id: "garlic-butter-chicken-rice-skillet",
+    title: "Garlic Butter Chicken Rice Skillet",
+    subtitle: "Golden seared chicken tossed with fragrant garlic butter, tender rice, and wilted greens.",
+    moods: ["15-minute", "one-pot", "high-protein", "budget"],
     totalTimeMinutes: 15,
     activeTimeMinutes: 15,
     baseServings: 2,
-    equipment: ["Medium saucepan or skillet"],
+    equipment: ["Large skillet"],
     ingredients: [
-      {
-        ingredientId: "chickpeas",
-        qty: 400,
-        unit: "g",
-        note: "1 can, drained and rinsed",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "canned-tomatoes",
-        qty: 300,
-        unit: "g",
-        note: "or tomato sauce / passata",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "onion",
-        qty: 1,
-        unit: "whole",
-        note: "diced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 3,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "curry-powder",
-        qty: 1.5,
-        unit: "tbsp",
-        note: "or cumin + paprika + chili powder",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "heavy-cream",
-        qty: 60,
-        unit: "ml",
-        note: "or Greek yogurt / coconut milk swap",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "olive-oil",
-        qty: 1,
-        unit: "tbsp",
-        note: "",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "spinach",
-        qty: 50,
-        unit: "g",
-        note: "optional fresh greens",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
+      { ingredientId: "chicken-thighs", qty: 350, unit: "g", role: "core", note: "cut bite-size" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "core", note: "cooked or quick microwave rice" },
+      { ingredientId: "butter", qty: 2, unit: "tbsp", role: "flavor" },
+      { ingredientId: "garlic", qty: 3, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "chicken-broth", qty: 60, unit: "ml", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "paprika", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "spinach", qty: 60, unit: "g", role: "optional" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Sizzle Spices & Onions",
-        text: "Heat oil in saucepan over medium heat. Sauté diced onion for 3 minutes until soft. Add garlic and curry powder, stirring for 45 seconds until spices bloom and release fragrant oils.",
-        timer: {
-          label: "Bloom Spices",
-          seconds: 180,
-          cue: "golden & fragrant"
-        },
-        ingredients: ["onion", "garlic", "curry-powder", "olive-oil"]
+        title: "Sear Chicken",
+        text: "Season chicken with paprika, salt, and pepper. Sear in hot oil until deep golden.",
+        timer: { label: "Sear", seconds: 240, cue: "deep golden crust" }
       },
       {
         id: "step-2",
-        title: "Simmer Chickpeas & Tomato",
-        text: "Pour in canned tomatoes, drained chickpeas, and 1/2 tsp salt. Bring to a gentle simmer, mashing a few chickpeas with the back of your spoon to naturally thicken the curry.",
-        timer: {
-          label: "Simmer Curry",
-          seconds: 360,
-          cue: "rich bubbling stew"
-        },
-        ingredients: ["canned-tomatoes", "chickpeas", "salt"]
+        title: "Garlic Butter Sauce",
+        text: "Add garlic, butter, and broth. Let bubble rapidly for 1 minute.",
+        timer: { label: "Sauce Glaze", seconds: 60, cue: "glossy butter sauce" }
       },
       {
         id: "step-3",
-        title: "Swirl Cream & Wilt Spinach",
-        text: "Turn heat to low. Stir in heavy cream (or Greek yogurt swap) and spinach. Heat through for 1-2 minutes until greens wilt and curry is velvety.",
-        timer: {
-          label: "Finish Velvety",
-          seconds: 90,
-          cue: "creamy golden sauce"
-        },
-        ingredients: ["heavy-cream", "spinach"]
-      },
-      {
-        id: "step-4",
-        title: "Serve",
-        text: "Ladle into warm bowls over fluffy rice or alongside warm toasted bread / tortillas.",
-        timer: null,
-        ingredients: []
-      }
-    ]
-  },
-  {
-    id: "lemon-butter-salmon-green-beans",
-    title: "12-Minute Lemon Butter Salmon & Crisp Beans",
-    subtitle: "Pan-seared salmon with a sizzling garlic-lemon pan sauce and tender blistered green beans.",
-    moods: ["15-minute", "one-pot", "high-protein"],
-    totalTimeMinutes: 12,
-    activeTimeMinutes: 12,
-    baseServings: 2,
-    equipment: ["Large skillet", "Fish spatula / tongs"],
-    ingredients: [
-      {
-        ingredientId: "salmon",
-        qty: 2,
-        unit: "whole",
-        note: "fillets (approx 300g)",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "green-beans",
-        qty: 200,
-        unit: "g",
-        note: "trimmed",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "butter",
-        qty: 2,
-        unit: "tbsp",
-        note: "",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 2,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "lemon",
-        qty: 0.5,
-        unit: "whole",
-        note: "juiced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "olive-oil",
-        qty: 1,
-        unit: "tbsp",
-        note: "for pan searing",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      },
-      {
-        ingredientId: "black-pepper",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
-    ],
-    steps: [
-      {
-        id: "step-1",
-        title: "Season Salmon",
-        text: "Pat salmon fillets thoroughly dry. Season flesh side generously with salt and cracked black pepper.",
-        timer: null,
-        ingredients: ["salmon", "salt", "black-pepper"]
-      },
-      {
-        id: "step-2",
-        title: "Crisp Salmon & Blister Beans",
-        text: "Heat olive oil in skillet over medium-high heat. Add salmon skin-side down (or presentation side first) and arrange green beans around the fillets. Sear undisturbed for 4 minutes.",
-        timer: {
-          label: "Pan Sear",
-          seconds: 240,
-          cue: "crispy base & tender beans"
-        },
-        ingredients: ["salmon", "green-beans", "olive-oil"]
-      },
-      {
-        id: "step-3",
-        title: "Flip & Baste with Butter",
-        text: "Flip salmon fillets over. Add butter and minced garlic to the pan center. As butter foams, spoon it over the salmon and toss the beans.",
-        timer: {
-          label: "Butter Basting",
-          seconds: 120,
-          cue: "golden garlic butter"
-        },
-        ingredients: ["butter", "garlic"]
-      },
-      {
-        id: "step-4",
-        title: "Lemon Glaze",
-        text: "Squeeze fresh lemon juice over everything. The pan will sizzle and emulsify with the butter into a glossy sauce. Plate salmon alongside bright green beans.",
-        timer: {
-          label: "Lemon Sizzle",
-          seconds: 30,
-          cue: "sauce bright and glossy"
-        },
-        ingredients: ["lemon"]
+        title: "Fold Rice",
+        text: "Toss in cooked rice and spinach until warm and coated in sauce.",
+        timer: { label: "Warm & Wilt", seconds: 120, cue: "spinach wilted" }
       }
     ]
   },
@@ -654,344 +445,528 @@ window.PANTRY_RECIPES = [
     totalTimeMinutes: 10,
     activeTimeMinutes: 10,
     baseServings: 2,
-    equipment: ["Skillet or flat griddle", "Spatula"],
+    equipment: ["Skillet or flat griddle"],
     ingredients: [
-      {
-        ingredientId: "tortillas",
-        qty: 4,
-        unit: "whole",
-        note: "medium flour or corn tortillas",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "black-beans",
-        qty: 240,
-        unit: "g",
-        note: "1 can, drained and lightly mashed with a fork",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "cheese",
-        qty: 120,
-        unit: "g",
-        note: "shredded cheddar, jack, or mozzarella",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "onion",
-        qty: 0.5,
-        unit: "whole",
-        note: "finely diced",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "cumin",
-        qty: 1,
-        unit: "tsp",
-        note: "or taco seasoning / chili powder",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "butter",
-        qty: 1,
-        unit: "tbsp",
-        note: "or oil for crisping",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "salsa",
-        qty: 2,
-        unit: "tbsp",
-        note: "or hot sauce for dipping",
-        optional: true,
-        scalable: true
-      }
+      { ingredientId: "tortillas", qty: 4, unit: "whole", role: "core" },
+      { ingredientId: "black-beans", qty: 240, unit: "g", role: "core", note: "drained & mashed" },
+      { ingredientId: "cheese", qty: 120, unit: "g", role: "core", note: "shredded" },
+      { ingredientId: "cumin", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "onion", qty: 0.5, unit: "whole", role: "optional", note: "diced" },
+      { ingredientId: "butter", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salsa", qty: 2, unit: "tbsp", role: "optional" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Season Bean Filling",
-        text: "In a bowl, roughly mash drained black beans with a fork. Mix in cumin, diced onion, and a pinch of salt.",
-        timer: null,
-        ingredients: ["black-beans", "cumin", "onion"]
+        title: "Assemble",
+        text: "Mash black beans with cumin. Spread over tortillas and top with cheese. Fold into half moons.",
+        timer: null
       },
       {
         id: "step-2",
-        title: "Assemble Tortillas",
-        text: "Lay tortillas flat. Spread bean mash over half of each tortilla, and top generously with shredded cheese. Fold over to create half-moons.",
-        timer: null,
-        ingredients: ["tortillas", "cheese"]
+        title: "Pan Crisp",
+        text: "Melt butter in skillet over medium heat. Crisp quesadillas for 2.5 minutes per side until crunchy and cheese is melted.",
+        timer: { label: "Crisp Tortillas", seconds: 150, cue: "golden brown & melted" }
       },
       {
         id: "step-3",
-        title: "Pan Crisp Side 1",
-        text: "Melt a touch of butter or oil in skillet over medium heat. Place quesadillas in pan and press down with spatula until bottom is deeply golden and crispy.",
-        timer: {
-          label: "Crisp Bottom",
-          seconds: 150,
-          cue: "golden brown & crunchy"
-        },
-        ingredients: ["butter"]
-      },
-      {
-        id: "step-4",
-        title: "Flip & Melt",
-        text: "Carefully flip over. Cook second side until cheese is completely melted and bubbling at edges.",
-        timer: {
-          label: "Melt & Brown",
-          seconds: 120,
-          cue: "cheese gooey & melted"
-        },
-        ingredients: []
-      },
-      {
-        id: "step-5",
-        title: "Slice & Serve",
-        text: "Cut into wedges on a board. Serve with salsa, sour cream (or Greek yogurt swap), or hot sauce!",
-        timer: null,
-        ingredients: ["salsa"]
+        title: "Serve",
+        text: "Slice into wedges and serve with salsa or sour cream.",
+        timer: null
       }
     ]
   },
   {
-    id: "garlic-parmesan-butter-penne",
-    title: "15-Minute Garlic Parmesan Silk Penne",
-    subtitle: "Tender penne coated in a velvety emulsion of pasta water, sweet garlic, golden butter, and sharp parmesan.",
-    moods: ["15-minute", "one-pot", "budget"],
-    totalTimeMinutes: 14,
-    activeTimeMinutes: 14,
+    id: "peanut-noodles",
+    title: "10-Minute Creamy Peanut Noodles",
+    subtitle: "Hot noodles tossed in a rich, savory peanut butter and soy sauce dressing.",
+    moods: ["15-minute", "budget", "one-pot"],
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
     baseServings: 2,
-    equipment: ["Medium pot or skillet", "Tongs"],
+    equipment: ["Pot", "Whisk"],
     ingredients: [
-      {
-        ingredientId: "penne",
-        qty: 200,
-        unit: "g",
-        note: "or spaghetti / any pasta shape",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "butter",
-        qty: 3,
-        unit: "tbsp",
-        note: "quality butter",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 4,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "parmesan",
-        qty: 45,
-        unit: "g",
-        note: "freshly grated",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "red-pepper-flakes",
-        qty: 0.5,
-        unit: "tsp",
-        note: "for gentle warmth",
-        optional: true,
-        scalable: true
-      },
-      {
-        ingredientId: "black-pepper",
-        qty: null,
-        unit: "to taste",
-        note: "plenty of fresh cracked pepper",
-        optional: false,
-        scalable: false
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
+      { ingredientId: "noodles", qty: 200, unit: "g", role: "core", note: "ramen, spaghetti, or rice noodles" },
+      { ingredientId: "peanut-butter", qty: 3, unit: "tbsp", role: "core" },
+      { ingredientId: "soy-sauce", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "honey", qty: 1, unit: "tbsp", role: "flavor", note: "or brown sugar" },
+      { ingredientId: "garlic", qty: 1, unit: "clove", role: "flavor", note: "minced" },
+      { ingredientId: "hot-sauce", qty: 1, unit: "tsp", role: "optional", note: "or sriracha" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Boil Pasta",
-        text: "Boil penne in salted water until just shy of al dente (about 8-9 minutes). Before draining, scoop out 1/2 cup of starchy pasta water!",
-        timer: {
-          label: "Boil Penne",
-          seconds: 510,
-          cue: "al dente with bite"
-        },
-        ingredients: ["penne", "salt"]
+        title: "Boil Noodles",
+        text: "Boil noodles until tender. Scoop out 3 tbsp warm noodle water.",
+        timer: { label: "Boil Noodles", seconds: 300, cue: "tender" }
       },
       {
         id: "step-2",
-        title: "Sizzle Garlic Butter",
-        text: "In the warm pot over medium-low heat, melt 2 tbsp butter. Add minced garlic and red pepper flakes. Sauté gently for 60 seconds until sweet and fragrant without browning.",
-        timer: {
-          label: "Gently Warm Garlic",
-          seconds: 60,
-          cue: "fragrant & infused"
-        },
-        ingredients: ["butter", "garlic", "red-pepper-flakes"]
+        title: "Whisk Peanut Sauce",
+        text: "In a bowl, whisk peanut butter, soy sauce, honey, garlic, and warm noodle water until silky.",
+        timer: null
       },
       {
         id: "step-3",
-        title: "Emulsify Sauce",
-        text: "Toss the drained hot penne into the garlic butter with 4 tbsp of reserved starchy pasta water, the remaining 1 tbsp butter, and grated parmesan. Swirl vigorously until a glossy, creamy sauce clings to every tube.",
-        timer: {
-          label: "Vigorous Swirl",
-          seconds: 90,
-          cue: "creamy restaurant emulsion"
-        },
-        ingredients: ["parmesan", "black-pepper"]
-      },
-      {
-        id: "step-4",
-        title: "Plate & Devour",
-        text: "Dish into warm bowls, crack fresh black pepper over the top, and shower with extra parmesan.",
-        timer: null,
-        ingredients: ["parmesan"]
+        title: "Toss & Devour",
+        text: "Toss hot noodles into the peanut dressing. Top with chili flakes or scallions if you have them!",
+        timer: null
       }
     ]
   },
   {
-    id: "smoky-beef-pepper-skillet",
-    title: "Smoky Beef & Sweet Pepper Skillet",
-    subtitle: "High-protein savory ground beef sizzled with bell peppers, garlic, and smoked paprika over a quick pan glaze.",
-    moods: ["15-minute", "one-pot", "high-protein", "clean-fridge"],
+    id: "creamy-tomato-chickpea-curry",
+    title: "15-Minute Creamy Chickpea Curry",
+    subtitle: "Hearty pantry chickpeas simmered in a spiced tomato sauce finished with cream or yogurt.",
+    moods: ["one-pot", "budget", "high-protein", "clean-fridge", "15-minute"],
     totalTimeMinutes: 15,
     activeTimeMinutes: 15,
     baseServings: 2,
-    equipment: ["Large skillet", "Wooden spoon"],
+    equipment: ["Saucepan"],
     ingredients: [
-      {
-        ingredientId: "ground-beef",
-        qty: 350,
-        unit: "g",
-        note: "or ground turkey / pork",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "bell-pepper",
-        qty: 1,
-        unit: "whole",
-        note: "sliced into strips",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "onion",
-        qty: 0.5,
-        unit: "whole",
-        note: "sliced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "garlic",
-        qty: 3,
-        unit: "clove",
-        note: "minced",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "smoked-paprika",
-        qty: 1.5,
-        unit: "tsp",
-        note: "",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "cumin",
-        qty: 0.5,
-        unit: "tsp",
-        note: "",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "soy-sauce",
-        qty: 1,
-        unit: "tbsp",
-        note: "or Worcestershire sauce",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "olive-oil",
-        qty: 1,
-        unit: "tbsp",
-        note: "",
-        optional: false,
-        scalable: true
-      },
-      {
-        ingredientId: "salt",
-        qty: null,
-        unit: "to taste",
-        note: "",
-        optional: false,
-        scalable: false
-      }
+      { ingredientId: "chickpeas", qty: 400, unit: "g", role: "core", note: "1 can drained" },
+      { ingredientId: "canned-tomatoes", qty: 300, unit: "g", role: "core" },
+      { ingredientId: "curry-powder", qty: 1.5, unit: "tbsp", role: "core" },
+      { ingredientId: "heavy-cream", qty: 60, unit: "ml", role: "flavor", note: "or Greek yogurt swap" },
+      { ingredientId: "onion", qty: 1, unit: "whole", role: "flavor" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
     ],
     steps: [
       {
         id: "step-1",
-        title: "Brown Ground Beef",
-        text: "Heat skillet over medium-high heat with a dash of oil. Add ground beef, breaking it up with a wooden spoon. Brown well until caramelized.",
-        timer: {
-          label: "Brown Beef",
-          seconds: 240,
-          cue: "deep savory crust"
-        },
-        ingredients: ["ground-beef", "olive-oil"]
+        title: "Sizzle Aromatics",
+        text: "Sauté onion and garlic in oil with curry powder for 2 minutes until fragrant.",
+        timer: { label: "Bloom Spices", seconds: 120, cue: "aromatic" }
       },
       {
         id: "step-2",
-        title: "Toss Peppers & Aromatics",
-        text: "Add sliced bell peppers, onions, and minced garlic into the beef. Sauté for 3 minutes until peppers are blistered yet tender-crisp.",
-        timer: {
-          label: "Sauté Peppers",
-          seconds: 180,
-          cue: "peppers vibrant & tender"
-        },
-        ingredients: ["bell-pepper", "onion", "garlic"]
+        title: "Simmer Curry",
+        text: "Add tomatoes, chickpeas, and salt. Simmer for 6 minutes.",
+        timer: { label: "Simmer", seconds: 360, cue: "bubbling stew" }
       },
       {
         id: "step-3",
-        title: "Glaze & Season",
-        text: "Stir in smoked paprika, cumin, soy sauce, and 1/2 tsp salt. Toss continuously to coat all beef and peppers in the smoky glaze.",
-        timer: {
-          label: "Glaze Sizzle",
-          seconds: 90,
-          cue: "fragrant & glossy"
-        },
-        ingredients: ["smoked-paprika", "cumin", "soy-sauce", "salt"]
+        title: "Finish Creamy",
+        text: "Stir in heavy cream and serve hot over rice or bread.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "mustard-honey-chicken",
+    title: "Crispy Honey Mustard Chicken",
+    subtitle: "Pan-seared chicken glazed in tangy Dijon mustard and sweet honey.",
+    moods: ["15-minute", "high-protein", "one-pan"],
+    totalTimeMinutes: 14,
+    activeTimeMinutes: 14,
+    baseServings: 2,
+    equipment: ["Skillet"],
+    ingredients: [
+      { ingredientId: "chicken-breast", qty: 350, unit: "g", role: "core" },
+      { ingredientId: "mustard", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "honey", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sear Chicken",
+        text: "Sear seasoned chicken pieces in oil for 4 minutes until golden.",
+        timer: { label: "Sear", seconds: 240, cue: "golden" }
       },
       {
-        id: "step-4",
+        id: "step-2",
+        title: "Honey Mustard Glaze",
+        text: "Mix mustard, honey, and garlic. Pour over chicken and simmer for 2 minutes until glossy.",
+        timer: { label: "Glaze", seconds: 120, cue: "glossy coating" }
+      }
+    ]
+  },
+  {
+    id: "sausage-rice-skillet",
+    title: "One-Pan Smoky Sausage Rice Skillet",
+    subtitle: "Browned sausage tossed with tender rice, garlic, and sweet caramelized onions.",
+    moods: ["one-pot", "budget", "high-protein", "15-minute"],
+    totalTimeMinutes: 14,
+    activeTimeMinutes: 14,
+    baseServings: 2,
+    equipment: ["Large skillet"],
+    ingredients: [
+      { ingredientId: "sausage", qty: 300, unit: "g", role: "core", note: "sliced into rounds" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "core", note: "cooked rice" },
+      { ingredientId: "onion", qty: 0.5, unit: "whole", role: "flavor" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "paprika", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Brown Sausage & Onion",
+        text: "Sizzle sausage rounds and sliced onion in oil for 4 minutes until deeply browned.",
+        timer: { label: "Brown Sausage", seconds: 240, cue: "crispy edges" }
+      },
+      {
+        id: "step-2",
+        title: "Toss in Rice",
+        text: "Add garlic, paprika, and cooked rice. Toss over high heat for 2 minutes to soak up savory sausage oils.",
+        timer: { label: "Toast Rice", seconds: 120, cue: "heated through" }
+      }
+    ]
+  },
+  {
+    id: "tuna-quesadillas",
+    title: "10-Minute Crispy Tuna & Cheddar Melts",
+    subtitle: "Savory canned tuna paired with gooey melted cheese inside a crispy toasted tortilla.",
+    moods: ["15-minute", "budget", "one-pot"],
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
+    baseServings: 2,
+    equipment: ["Skillet"],
+    ingredients: [
+      { ingredientId: "canned-tuna", qty: 1, unit: "can", role: "core", note: "drained" },
+      { ingredientId: "tortillas", qty: 2, unit: "whole", role: "core" },
+      { ingredientId: "cheese", qty: 80, unit: "g", role: "core", note: "shredded" },
+      { ingredientId: "mayonnaise", qty: 1, unit: "tbsp", role: "flavor" },
+      { ingredientId: "butter", qty: 1, unit: "tbsp", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Mix Tuna",
+        text: "Mix drained tuna with mayonnaise and a pinch of black pepper.",
+        timer: null
+      },
+      {
+        id: "step-2",
+        title: "Pan Crisp",
+        text: "Melt butter in skillet. Place filled tortilla in pan and crisp for 2.5 minutes per side until golden and bubbly.",
+        timer: { label: "Pan Crisp", seconds: 150, cue: "crunchy & melted" }
+      }
+    ]
+  },
+  {
+    id: "one-pot-tomato-basil-pasta",
+    title: "One-Pot Rich Tomato Basil Pasta",
+    subtitle: "Pasta cooks directly inside a rich tomato-garlic broth with zero colander cleanup.",
+    moods: ["one-pot", "budget", "15-minute"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 5,
+    baseServings: 2,
+    equipment: ["Wide pot"],
+    ingredients: [
+      { ingredientId: "pasta", qty: 220, unit: "g", role: "core" },
+      { ingredientId: "canned-tomatoes", qty: 400, unit: "g", role: "core" },
+      { ingredientId: "garlic", qty: 3, unit: "clove", role: "flavor" },
+      { ingredientId: "onion", qty: 0.5, unit: "whole", role: "flavor" },
+      { ingredientId: "olive-oil", qty: 2, unit: "tbsp", role: "staple" },
+      { ingredientId: "oregano", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "parmesan", qty: 30, unit: "g", role: "optional" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Simmer Everything",
+        text: "Add pasta, canned tomatoes, garlic, onion, olive oil, and 2 cups water into pot. Boil for 9 minutes.",
+        timer: { label: "Boil & Reduce", seconds: 540, cue: "sauce thickens" }
+      },
+      {
+        id: "step-2",
+        title: "Finish",
+        text: "Fold in parmesan and enjoy!",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "lemon-butter-salmon-green-beans",
+    title: "12-Minute Lemon Butter Salmon & Crisp Beans",
+    subtitle: "Pan-seared salmon with a sizzling garlic-lemon pan sauce and tender green beans.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Large skillet"],
+    ingredients: [
+      { ingredientId: "salmon", qty: 2, unit: "whole", role: "core" },
+      { ingredientId: "lemon", qty: 0.5, unit: "whole", role: "core" },
+      { ingredientId: "butter", qty: 2, unit: "tbsp", role: "core" },
+      { ingredientId: "green-beans", qty: 200, unit: "g", role: "core" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "olive-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sear Salmon & Beans",
+        text: "Sear salmon and green beans in skillet with oil for 4 minutes.",
+        timer: { label: "Sear", seconds: 240, cue: "crispy skin" }
+      },
+      {
+        id: "step-2",
+        title: "Butter Lemon Glaze",
+        text: "Flip salmon, drop in butter, garlic, and fresh lemon juice. Spoon foaming sauce over fish for 2 minutes.",
+        timer: { label: "Baste", seconds: 120, cue: "glossy glaze" }
+      }
+    ]
+  },
+  {
+    id: "korean-beef-bowls",
+    title: "12-Minute Sweet & Spicy Korean Beef Bowls",
+    subtitle: "Caramelized savory ground beef in garlic, soy sauce, and honey served over hot rice.",
+    moods: ["15-minute", "one-pot", "high-protein", "budget"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Skillet"],
+    ingredients: [
+      { ingredientId: "ground-beef", qty: 350, unit: "g", role: "core" },
+      { ingredientId: "soy-sauce", qty: 2.5, unit: "tbsp", role: "core" },
+      { ingredientId: "honey", qty: 1.5, unit: "tbsp", role: "core", note: "or brown sugar" },
+      { ingredientId: "garlic", qty: 3, unit: "clove", role: "core" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "flavor", note: "for serving" },
+      { ingredientId: "red-pepper-flakes", qty: 0.5, unit: "tsp", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "scallions", qty: 2, unit: "whole", role: "optional" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Caramelize Beef",
+        text: "Brown ground beef in skillet over high heat with oil for 4 minutes until deeply caramelized.",
+        timer: { label: "Brown Beef", seconds: 240, cue: "caramelized bits" }
+      },
+      {
+        id: "step-2",
+        title: "Glaze",
+        text: "Add minced garlic, soy sauce, honey, and chili flakes. Simmer for 1 minute until sauce glazes the beef.",
+        timer: { label: "Glaze", seconds: 60, cue: "rich & glossy" }
+      },
+      {
+        id: "step-3",
         title: "Serve",
-        text: "Spoon directly over rice, wrap in warm tortillas, or eat straight from the bowl for a quick high-protein dinner.",
-        timer: null,
-        ingredients: []
+        text: "Spoon over hot rice and enjoy!",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "salsa-chicken-soup",
+    title: "Three-Ingredient 15-Minute Salsa Chicken Soup",
+    subtitle: "Hearty warming soup made by simmering chicken and chunky salsa in savory broth.",
+    moods: ["15-minute", "one-pot", "high-protein", "budget"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 5,
+    baseServings: 2,
+    equipment: ["Medium saucepan"],
+    ingredients: [
+      { ingredientId: "chicken-breast", qty: 300, unit: "g", role: "core", note: "diced small" },
+      { ingredientId: "salsa", qty: 200, unit: "g", role: "core" },
+      { ingredientId: "chicken-broth", qty: 400, unit: "ml", role: "core" },
+      { ingredientId: "black-beans", qty: 150, unit: "g", role: "optional" },
+      { ingredientId: "cheese", qty: 30, unit: "g", role: "optional" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Simmer Soup",
+        text: "Bring broth, salsa, and diced chicken to a boil in a saucepan. Reduce heat and simmer for 8 minutes until chicken is tender.",
+        timer: { label: "Simmer Soup", seconds: 480, cue: "chicken tender" }
+      },
+      {
+        id: "step-2",
+        title: "Serve",
+        text: "Ladle into bowls and top with cheese or crushed tortilla chips.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "garlic-butter-shrimp-rice",
+    title: "10-Minute Garlic Butter Shrimp & Rice",
+    subtitle: "Succulent pan-seared shrimp in golden garlic butter and lemon over fluffy rice.",
+    moods: ["15-minute", "one-pot", "high-protein"],
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
+    baseServings: 2,
+    equipment: ["Skillet"],
+    ingredients: [
+      { ingredientId: "shrimp", qty: 300, unit: "g", role: "core" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "core" },
+      { ingredientId: "butter", qty: 2.5, unit: "tbsp", role: "core" },
+      { ingredientId: "garlic", qty: 4, unit: "clove", role: "core" },
+      { ingredientId: "lemon", qty: 0.5, unit: "whole", role: "flavor" },
+      { ingredientId: "olive-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sizzle Shrimp",
+        text: "Heat oil in skillet over high heat. Add shrimp and sear for 2 minutes.",
+        timer: { label: "Sear Shrimp", seconds: 120, cue: "pink & plump" }
+      },
+      {
+        id: "step-2",
+        title: "Garlic Butter Finish",
+        text: "Add butter, garlic, and squeeze of lemon. Sizzle for 60 seconds until fragrant.",
+        timer: { label: "Garlic Butter", seconds: 60, cue: "fragrant foam" }
+      },
+      {
+        id: "step-3",
+        title: "Serve with Rice",
+        text: "Spoon shrimp and garlic butter sauce over warm rice.",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "bbq-chicken-rice-bowl",
+    title: "12-Minute Smoky BBQ Chicken Bowl",
+    subtitle: "Pan-seared chicken glazed in sweet smoky BBQ sauce over rice with melted cheese.",
+    moods: ["15-minute", "one-pot", "high-protein", "budget"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Skillet"],
+    ingredients: [
+      { ingredientId: "chicken-thighs", qty: 350, unit: "g", role: "core" },
+      { ingredientId: "bbq-sauce", qty: 4, unit: "tbsp", role: "core" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "core" },
+      { ingredientId: "cheese", qty: 40, unit: "g", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sear Chicken",
+        text: "Sear chicken pieces in oil over high heat for 4 minutes until browned.",
+        timer: { label: "Sear Chicken", seconds: 240, cue: "browned" }
+      },
+      {
+        id: "step-2",
+        title: "Glaze BBQ Sauce",
+        text: "Pour BBQ sauce over chicken and toss for 1 minute until caramelized.",
+        timer: { label: "Glaze", seconds: 60, cue: "sticky glaze" }
+      },
+      {
+        id: "step-3",
+        title: "Bowl Assembly",
+        text: "Serve over rice and top with cheese to melt.",
+        timer: null
+      }
+    ]
+  }
+  ,
+  {
+    id: "clean-the-fridge-veggie-curry",
+    title: "15-Minute Clean-the-Fridge Veggie Curry",
+    subtitle: "A quick aromatic curry for any mixed vegetables, simmered in warm spices and rich tomato sauce.",
+    moods: ["one-pot", "budget", "clean-fridge", "15-minute"],
+    totalTimeMinutes: 15,
+    activeTimeMinutes: 15,
+    baseServings: 2,
+    equipment: ["Saucepan"],
+    ingredients: [
+      { ingredientId: "canned-tomatoes", qty: 300, unit: "g", role: "core" },
+      { ingredientId: "curry-powder", qty: 1.5, unit: "tbsp", role: "core" },
+      { ingredientId: "frozen-peas", qty: 100, unit: "g", role: "core" },
+      { ingredientId: "carrot", qty: 1, unit: "whole", role: "core", note: "diced" },
+      { ingredientId: "onion", qty: 1, unit: "whole", role: "flavor" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "neutral-oil", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Sizzle Aromatics",
+        text: "Sauté onion, garlic, and curry powder in oil for 2 minutes.",
+        timer: { label: "Sizzle", seconds: 120, cue: "fragrant" }
+      },
+      {
+        id: "step-2",
+        title: "Simmer Veggies",
+        text: "Add tomatoes, diced carrots, peas, and 1/2 cup water. Simmer for 7 minutes until carrots are tender.",
+        timer: { label: "Simmer", seconds: 420, cue: "tender vegetables" }
+      }
+    ]
+  },
+  {
+    id: "mediterranean-tuna-rice-bowl",
+    title: "10-Minute Mediterranean Tuna & Tomato Rice Bowl",
+    subtitle: "Fluffy rice tossed with canned tuna, sweet tomatoes, olive oil, and herbs.",
+    moods: ["15-minute", "budget", "high-protein"],
+    totalTimeMinutes: 10,
+    activeTimeMinutes: 10,
+    baseServings: 2,
+    equipment: ["Bowl"],
+    ingredients: [
+      { ingredientId: "canned-tuna", qty: 1, unit: "can", role: "core", note: "drained" },
+      { ingredientId: "rice", qty: 300, unit: "g", role: "core", note: "warm cooked rice" },
+      { ingredientId: "tomatoes", qty: 1, unit: "whole", role: "core", note: "or cherry tomatoes diced" },
+      { ingredientId: "olive-oil", qty: 1.5, unit: "tbsp", role: "flavor" },
+      { ingredientId: "oregano", qty: 1, unit: "tsp", role: "flavor" },
+      { ingredientId: "feta", qty: 30, unit: "g", role: "optional", note: "crumbled" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" },
+      { ingredientId: "black-pepper", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Toss Bowl",
+        text: "In a bowl, gently fold drained tuna, diced fresh tomatoes, olive oil, oregano, and salt into warm cooked rice. Top with feta cheese!",
+        timer: null
+      }
+    ]
+  },
+  {
+    id: "creamy-tomato-penne",
+    title: "12-Minute Creamy Tomato Pink Penne",
+    subtitle: "Silky penne coated in a velvety blush sauce of crushed tomatoes and cream.",
+    moods: ["15-minute", "one-pot", "budget"],
+    totalTimeMinutes: 12,
+    activeTimeMinutes: 12,
+    baseServings: 2,
+    equipment: ["Pot"],
+    ingredients: [
+      { ingredientId: "penne", qty: 220, unit: "g", role: "core" },
+      { ingredientId: "tomato-paste", qty: 3, unit: "tbsp", role: "core", note: "or canned tomatoes" },
+      { ingredientId: "heavy-cream", qty: 80, unit: "ml", role: "core", note: "or milk+butter swap" },
+      { ingredientId: "garlic", qty: 2, unit: "clove", role: "flavor" },
+      { ingredientId: "butter", qty: 1, unit: "tbsp", role: "staple" },
+      { ingredientId: "parmesan", qty: 25, unit: "g", role: "flavor" },
+      { ingredientId: "salt", qty: null, unit: "to taste", role: "staple" }
+    ],
+    steps: [
+      {
+        id: "step-1",
+        title: "Boil Penne",
+        text: "Boil penne until al dente. Reserve 1/4 cup pasta water and drain.",
+        timer: { label: "Boil", seconds: 540, cue: "al dente" }
+      },
+      {
+        id: "step-2",
+        title: "Whisk Pink Sauce",
+        text: "In the warm pot, melt butter with garlic and tomato paste for 1 minute. Whisk in cream until velvety.",
+        timer: { label: "Simmer Sauce", seconds: 60, cue: "smooth & pink" }
+      },
+      {
+        id: "step-3",
+        title: "Fold Pasta",
+        text: "Toss penne and parmesan into the pink sauce and serve.",
+        timer: null
       }
     ]
   }
