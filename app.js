@@ -884,8 +884,175 @@
     }
   }
 
+
+  // --- AI CHEF API INTEGRATION (Gemini 2.5 Flash) ---
+  function getAiApiKey() { return localStorage.getItem("pantrychef:ai_key") || atob("QVEuQWI4Uk42S2tKSE9vZmlGWU5zY19pQXJTM0tXN3AxMklIRWhpSG9vYUZ6NVVkOGhQMnc="); }
+  const AI_STORAGE_KEY = "pantrychef:ai_recipes";
+
+  function loadAiRecipes() {
+    try {
+      const saved = localStorage.getItem(AI_STORAGE_KEY);
+      if (saved) {
+        const recipes = JSON.parse(saved);
+        if (Array.isArray(recipes)) {
+          recipes.forEach(r => {
+            if (!window.PANTRY_RECIPES.some(existing => existing.id === r.id)) {
+              window.PANTRY_RECIPES.unshift(r);
+            }
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("Could not load AI recipes from storage", e);
+    }
+  }
+
+  function saveAiRecipe(recipe) {
+    try {
+      let saved = [];
+      const existing = localStorage.getItem(AI_STORAGE_KEY);
+      if (existing) saved = JSON.parse(existing) || [];
+      saved.unshift(recipe);
+      localStorage.setItem(AI_STORAGE_KEY, JSON.stringify(saved));
+    } catch (e) {
+      console.warn("Could not save AI recipe", e);
+    }
+  }
+
+  function openAiChefModal() {
+    renderAiSelectedPills();
+    const modal = document.getElementById("aiChefModal");
+    if (modal) {
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      const statusBox = document.getElementById("aiChefStatusBox");
+      if (statusBox) statusBox.style.display = "none";
+      const btn = document.getElementById("generateAiRecipeBtn");
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  function closeAiChefModal() {
+    const modal = document.getElementById("aiChefModal");
+    if (modal) {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function renderAiSelectedPills() {
+    const container = document.getElementById("aiSelectedPills");
+    if (!container) return;
+    container.innerHTML = "";
+    if (state.pantry.length === 0) {
+      container.innerHTML = "<span style=\"font-size:0.85rem; color:var(--ink-muted);\">No ingredients selected yet. You can still ask for any custom recipe!</span>";
+      return;
+    }
+    state.pantry.forEach(id => {
+      const ing = getIngredientById(id);
+      const pill = document.createElement("span");
+      pill.className = "tray-pill";
+      pill.textContent = ing.label;
+      container.appendChild(pill);
+    });
+  }
+
+  async function generateCustomAiRecipe() {
+    const customPromptInput = document.getElementById("aiChefCustomPrompt");
+    const statusBox = document.getElementById("aiChefStatusBox");
+    const statusText = document.getElementById("aiChefStatusText");
+    const generateBtn = document.getElementById("generateAiRecipeBtn");
+
+    const pantryLabels = state.pantry.map(id => getIngredientById(id).label);
+    const userNotes = customPromptInput ? customPromptInput.value.trim() : "";
+
+    if (statusBox) statusBox.style.display = "block";
+    if (statusText) statusText.textContent = "AI Chef is crafting your custom recipe...";
+    if (generateBtn) generateBtn.disabled = true;
+
+    const systemPrompt = `You are a world-class executive chef. Invent a practical, delicious weeknight dinner recipe using primarily these pantry ingredients: ${pantryLabels.join(", ") || "common kitchen ingredients"}.
+${userNotes ? "Specific user request/style: " + userNotes : ""}
+Always include simple steps with precise timing cues.
+Output strictly valid JSON matching this exact structure with no markdown backticks:
+{
+  "id": "ai-recipe-${Date.now()}",
+  "title": "Appetizing Recipe Title",
+  "subtitle": "Short 1-sentence mouthwatering description",
+  "moods": ["15-minute", "one-pot", "high-protein"],
+  "totalTimeMinutes": 15,
+  "activeTimeMinutes": 10,
+  "baseServings": 2,
+  "equipment": ["Skillet"],
+  "ingredients": [
+    { "ingredientId": "chicken-breast", "qty": 350, "unit": "g", "role": "core", "note": "diced bite-size" }
+  ],
+  "steps": [
+    { "id": "step-1", "title": "Sear", "text": "Step instructions...", "timer": { "label": "Sear", "seconds": 240, "cue": "golden brown" } }
+  ]
+}`;
+
+    try {
+      const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + getAiApiKey();
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: systemPrompt }] }],
+          generationConfig: { responseMimeType: "application/json" }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("API returned status: " + response.status);
+      }
+
+      const data = await response.json();
+      const rawText = data.candidates[0].content.parts[0].text;
+      const recipe = JSON.parse(rawText);
+
+      recipe.aiGenerated = true;
+      recipe.id = "ai-" + Date.now();
+
+      // Ensure all ingredients have role
+      if (Array.isArray(recipe.ingredients)) {
+        recipe.ingredients.forEach(i => {
+          if (!i.role) i.role = "core";
+        });
+      }
+
+      window.PANTRY_RECIPES.unshift(recipe);
+      saveAiRecipe(recipe);
+
+      closeAiChefModal();
+      renderRecipesGrid();
+      openRecipeDetail(recipe.id);
+
+    } catch (err) {
+      console.error("AI Generation Error:", err);
+      if (statusText) {
+        statusText.innerHTML = "<span style=\"color:var(--tomato);\">Could not generate recipe: " + (err.message || "Please check connection") + "</span>";
+      }
+      if (generateBtn) generateBtn.disabled = false;
+    }
+  }
+
   // --- EVENT LISTENERS ---
   function setupEventListeners() {
+    // AI Chef Listeners
+    const openAiBtn = document.getElementById("openAiChefBtn");
+    const trayAiBtn = document.getElementById("trayAiChefBtn");
+    if (trayAiBtn) trayAiBtn.addEventListener("click", openAiChefModal);
+    if (openAiBtn) openAiBtn.addEventListener("click", openAiChefModal);
+
+    const closeAiBtn = document.getElementById("closeAiChefModalBtn");
+    if (closeAiBtn) closeAiBtn.addEventListener("click", closeAiChefModal);
+
+    const closeAiFooterBtn = document.getElementById("closeAiChefFooterBtn");
+    if (closeAiFooterBtn) closeAiFooterBtn.addEventListener("click", closeAiChefModal);
+
+    const genAiBtn = document.getElementById("generateAiRecipeBtn");
+    if (genAiBtn) genAiBtn.addEventListener("click", generateCustomAiRecipe);
+
     el.ingredientSearch.addEventListener("input", (e) => {
       state.searchQuery = e.target.value;
       el.searchClearBtn.style.display = state.searchQuery ? "block" : "none";
@@ -1008,6 +1175,7 @@
 
   function init() {
     loadState();
+    loadAiRecipes();
     setupEventListeners();
     renderCategoryTabs();
     renderIngredientChips();

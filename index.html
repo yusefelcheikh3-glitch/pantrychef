@@ -90,6 +90,9 @@
         <div class="tray-chips" id="selectedPills">
           <!-- Dynamic selected pills -->
         </div>
+        <button id="trayAiChefBtn" class="btn btn-ai-chef btn-sm" style="width:100%; margin-top:12px; justify-content:center;">
+          <span>✨</span> Ask AI Chef to Invent Recipe
+        </button>
       </div>
     </aside>
 
@@ -120,6 +123,44 @@
     </section>
 
   </main>
+
+  
+  <!-- AI Chef Recipe Generator Modal -->
+  <div id="aiChefModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aiChefModalTitle">
+    <div class="modal-card ai-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 id="aiChefModalTitle" class="modal-title">✨ Ask AI Chef</h2>
+          <p class="modal-subtitle">Invent a custom weeknight dinner using your selected pantry ingredients.</p>
+        </div>
+        <button id="closeAiChefModalBtn" class="modal-close-btn" aria-label="Close AI Chef">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="ai-chef-section">
+          <label class="ai-chef-label">Ingredients available in your pantry:</label>
+          <div id="aiSelectedPills" class="ai-selected-pills"></div>
+        </div>
+
+        <div class="ai-chef-section">
+          <label for="aiChefCustomPrompt" class="ai-chef-label">Flavor profile or style (optional):</label>
+          <input type="text" id="aiChefCustomPrompt" class="input-editorial ai-input" placeholder="e.g. Spicy &amp; crispy, extra cheesy, under 15 mins, Mexican style...">
+        </div>
+
+        <div id="aiChefStatusBox" class="ai-status-box" style="display:none;">
+          <div class="ai-spinner">🍳</div>
+          <div id="aiChefStatusText" class="ai-status-text">AI Chef is inventing your recipe...</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="closeAiChefFooterBtn" class="btn btn-secondary">Cancel</button>
+        <button id="generateAiRecipeBtn" class="btn btn-ai-chef">
+          <span>✨</span> Invent My Recipe
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Recipe Detail Modal -->
   <div class="modal-backdrop" id="recipeDetailModal" aria-hidden="true" role="dialog">

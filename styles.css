@@ -1267,3 +1267,78 @@ body {
   background: var(--saffron);
   color: var(--pepper);
 }
+
+/* AI Chef Button & Modal Styling */
+.btn-ai-chef {
+  background: linear-gradient(135deg, #FF6B4A 0%, #E85A37 50%, #C0392B 100%);
+  color: #FFFFFF !important;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(232, 90, 55, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s var(--ease);
+}
+
+.btn-ai-chef:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(232, 90, 55, 0.35);
+  filter: brightness(1.05);
+}
+
+.ai-selected-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.ai-chef-section {
+  margin-bottom: 20px;
+}
+
+.ai-chef-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.ai-input {
+  width: 100%;
+}
+
+.ai-status-box {
+  background: var(--paper-deep);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.ai-spinner {
+  font-size: 2.5rem;
+  animation: pulseRotate 1.4s infinite ease-in-out;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+@keyframes pulseRotate {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(15deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.ai-status-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.match-badge.ai-badge {
+  background: linear-gradient(135deg, #FF6B4A, #D35400);
+  color: #FFFFFF;
+}
