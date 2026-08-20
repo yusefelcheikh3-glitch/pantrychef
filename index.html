@@ -16,7 +16,7 @@
       <a href="#" class="brand" id="brandHome">
         <span class="brand-icon">🍳</span>
         <span class="brand-title">PantryChef</span>
-        <span class="brand-badge version-tag">v0.4</span>
+        <span class="brand-badge version-tag">v0.5</span>
       </a>
 
       <div class="header-actions">
@@ -148,6 +148,20 @@
         <div class="ai-chef-section">
           <label for="aiChefCustomPrompt" class="ai-chef-label">Flavor profile or style (optional):</label>
           <input type="text" id="aiChefCustomPrompt" class="input-editorial ai-input" placeholder="e.g. Spicy &amp; crispy, extra cheesy, under 15 mins, Mexican style...">
+        </div>
+
+        <!-- AI Backup & Storage Tools -->
+        <div class="ai-chef-section ai-storage-tools">
+          <label class="ai-chef-label">Recipe Backup &amp; Storage:</label>
+          <div class="ai-tools-btn-row">
+            <button id="exportAiRecipesBtn" class="btn btn-secondary btn-xs" aria-label="Export custom recipes to JSON">💾 Export Recipes</button>
+            <label class="btn btn-secondary btn-xs" style="cursor:pointer; margin:0;" aria-label="Import custom recipes from JSON">
+              📥 Import Recipes
+              <input type="file" id="importAiRecipesInput" accept=".json" style="display:none;">
+            </label>
+            <button id="clearAiRecipesBtn" class="btn btn-secondary btn-xs btn-danger-soft" aria-label="Clear AI-generated recipe history">🗑️ Clear AI History</button>
+          </div>
+          <div id="aiStorageStatus" class="ai-storage-status-text"></div>
         </div>
 
         <div id="aiChefStatusBox" class="ai-status-box" style="display:none;">

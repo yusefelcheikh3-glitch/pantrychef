@@ -1351,3 +1351,41 @@ body {
   font-size: 0.72rem;
   letter-spacing: 0.04em;
 }
+
+/* v0.5 AI Backup & Tool Styling */
+.ai-storage-tools {
+  background: var(--paper);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.ai-tools-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-xs {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+}
+
+.btn-danger-soft {
+  color: var(--tomato);
+  border-color: rgba(217, 74, 56, 0.3);
+}
+
+.btn-danger-soft:hover {
+  background: rgba(217, 74, 56, 0.08);
+  border-color: var(--tomato);
+}
+
+.ai-storage-status-text {
+  font-size: 0.75rem;
+  color: var(--success);
+  margin-top: 6px;
+  min-height: 14px;
+}

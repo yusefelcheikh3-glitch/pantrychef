@@ -957,6 +957,264 @@
     });
   }
 
+
+  // --- v0.5 AI SCHEMA VALIDATOR & FUZZY INGREDIENT RESOLVER ---
+
+  function normalizeStr(str) {
+    if (!str) return "";
+    return String(str).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function resolveIngredientToPantry(rawId, rawNote) {
+    if (!rawId) rawId = "custom-ingredient";
+    const normRaw = normalizeStr(rawId);
+
+    // 1. Direct ID match
+    const exact = window.PANTRY_INGREDIENTS.find(item => item.id === rawId);
+    if (exact) return exact.id;
+
+    // 2. Normalized ID match
+    const normIdMatch = window.PANTRY_INGREDIENTS.find(item => normalizeStr(item.id) === normRaw);
+    if (normIdMatch) return normIdMatch.id;
+
+    // 3. Normalized Label match
+    const normLabelMatch = window.PANTRY_INGREDIENTS.find(item => normalizeStr(item.label) === normRaw);
+    if (normLabelMatch) return normLabelMatch.id;
+
+    // 4. Alias match
+    for (const item of window.PANTRY_INGREDIENTS) {
+      if (item.aliases && item.aliases.some(alias => normalizeStr(alias) === normRaw)) {
+        return item.id;
+      }
+    }
+
+    // 5. Partial Substring match (e.g. "boneless-skinless-chicken" contains "chicken")
+    for (const item of window.PANTRY_INGREDIENTS) {
+      const itemNorm = normalizeStr(item.id);
+      if (normRaw.includes(itemNorm) || (item.aliases && item.aliases.some(a => normRaw.includes(normalizeStr(a))))) {
+        return item.id;
+      }
+    }
+
+    // 6. Check note substring if available
+    if (rawNote) {
+      const normNote = normalizeStr(rawNote);
+      for (const item of window.PANTRY_INGREDIENTS) {
+        if (normNote.includes(normalizeStr(item.id)) || (item.aliases && item.aliases.some(a => normNote.includes(normalizeStr(a))))) {
+          return item.id;
+        }
+      }
+    }
+
+    // 7. Dynamic Fallback: Register dynamically so UI / Chef Mode never crashes
+    const fallbackId = "custom-" + rawId.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    const cleanLabel = rawId.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+    
+    if (!window.PANTRY_INGREDIENTS.some(i => i.id === fallbackId)) {
+      window.PANTRY_INGREDIENTS.push({
+        id: fallbackId,
+        label: cleanLabel,
+        category: "staples",
+        isGeneric: true,
+        isDynamic: true
+      });
+    }
+
+    return fallbackId;
+  }
+
+  function validateAndSanitizeAiRecipe(raw) {
+    if (!raw || typeof raw !== "object") {
+      throw new Error("AI returned an invalid response structure.");
+    }
+
+    const sanitizedId = "ai-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    const sanitizedTitle = String(raw.title || "Custom AI Chef Special").trim();
+    const sanitizedSubtitle = String(raw.subtitle || "A custom weeknight meal crafted from your pantry.").trim();
+    
+    // Validate moods
+    const validMoods = ["15-minute", "one-pot", "high-protein", "budget", "clean-fridge"];
+    const moods = Array.isArray(raw.moods) ? raw.moods.filter(m => validMoods.includes(m)) : ["one-pot"];
+    if (moods.length === 0) moods.push("15-minute");
+
+    const totalTimeMinutes = parseInt(raw.totalTimeMinutes, 10) || 15;
+    const activeTimeMinutes = parseInt(raw.activeTimeMinutes, 10) || Math.min(10, totalTimeMinutes);
+    const baseServings = parseInt(raw.baseServings, 10) || 2;
+    const equipment = Array.isArray(raw.equipment) && raw.equipment.length > 0 ? raw.equipment.map(String) : ["Skillet or Pot"];
+
+    // Validate and sanitize ingredients with fuzzy resolver
+    const ingredients = [];
+    const validRoles = ["core", "flavor", "staple", "optional"];
+
+    if (Array.isArray(raw.ingredients)) {
+      raw.ingredients.forEach(ing => {
+        if (!ing) return;
+        const resolvedId = resolveIngredientToPantry(ing.ingredientId || ing.name || ing.label, ing.note);
+        const role = validRoles.includes(ing.role) ? ing.role : "core";
+        const qty = typeof ing.qty === "number" && !isNaN(ing.qty) ? ing.qty : null;
+        const unit = ing.unit ? String(ing.unit).trim() : (qty === null ? "to taste" : "");
+        const note = ing.note ? String(ing.note).trim() : "";
+
+        ingredients.push({
+          ingredientId: resolvedId,
+          qty: qty,
+          unit: unit,
+          role: role,
+          note: note
+        });
+      });
+    }
+
+    if (ingredients.length === 0) {
+      throw new Error("AI recipe contains no valid ingredients.");
+    }
+
+    // Validate steps and timers
+    const steps = [];
+    if (Array.isArray(raw.steps)) {
+      raw.steps.forEach((step, idx) => {
+        if (!step) return;
+        const stepId = step.id || "step-" + (idx + 1);
+        const title = step.title ? String(step.title).trim() : "Step " + (idx + 1);
+        const text = String(step.text || "").trim();
+        if (!text) return;
+
+        let timer = null;
+        if (step.timer && typeof step.timer === "object") {
+          const seconds = parseInt(step.timer.seconds, 10);
+          if (seconds > 0) {
+            timer = {
+              label: step.timer.label ? String(step.timer.label).trim() : "Timer",
+              seconds: seconds,
+              cue: step.timer.cue ? String(step.timer.cue).trim() : "complete"
+            };
+          }
+        }
+
+        steps.push({
+          id: stepId,
+          title: title,
+          text: text,
+          timer: timer
+        });
+      });
+    }
+
+    if (steps.length === 0) {
+      steps.push({
+        id: "step-1",
+        title: "Cook & Assemble",
+        text: "Cook ingredients until heated through and serve hot.",
+        timer: null
+      });
+    }
+
+    return {
+      id: sanitizedId,
+      title: sanitizedTitle,
+      subtitle: sanitizedSubtitle,
+      moods: moods,
+      totalTimeMinutes: totalTimeMinutes,
+      activeTimeMinutes: activeTimeMinutes,
+      baseServings: baseServings,
+      equipment: equipment,
+      ingredients: ingredients,
+      steps: steps,
+      aiGenerated: true
+    };
+  }
+
+  // --- v0.5 BACKUP, EXPORT & IMPORT UTILITIES ---
+
+  function exportAiRecipes() {
+    try {
+      const saved = localStorage.getItem(AI_STORAGE_KEY);
+      const recipes = saved ? JSON.parse(saved) : [];
+      if (recipes.length === 0) {
+        alert("No custom AI recipes found to export.");
+        return;
+      }
+
+      const blob = new Blob([JSON.stringify(recipes, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "pantrychef-ai-recipes-backup.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      const statusEl = document.getElementById("aiStorageStatus");
+      if (statusEl) {
+        statusEl.textContent = "✓ Exported " + recipes.length + " recipes to backup file!";
+        setTimeout(() => statusEl.textContent = "", 3500);
+      }
+    } catch (e) {
+      console.error("Export error:", e);
+      alert("Failed to export recipes: " + e.message);
+    }
+  }
+
+  function handleImportAiRecipes(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (!Array.isArray(imported)) throw new Error("File must contain a JSON array of recipes.");
+
+        let validCount = 0;
+        let existing = [];
+        const saved = localStorage.getItem(AI_STORAGE_KEY);
+        if (saved) existing = JSON.parse(saved) || [];
+
+        imported.forEach(raw => {
+          try {
+            const sanitized = validateAndSanitizeAiRecipe(raw);
+            if (!existing.some(r => r.title === sanitized.title)) {
+              existing.unshift(sanitized);
+              window.PANTRY_RECIPES.unshift(sanitized);
+              validCount++;
+            }
+          } catch (err) {
+            console.warn("Skipping invalid imported recipe:", err);
+          }
+        });
+
+        localStorage.setItem(AI_STORAGE_KEY, JSON.stringify(existing));
+        renderRecipesGrid();
+
+        const statusEl = document.getElementById("aiStorageStatus");
+        if (statusEl) {
+          statusEl.textContent = "✓ Imported " + validCount + " new custom recipes!";
+          setTimeout(() => statusEl.textContent = "", 3500);
+        }
+        event.target.value = "";
+      } catch (err) {
+        console.error("Import error:", err);
+        alert("Failed to import recipes: " + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function clearAiRecipesHistory() {
+    if (confirm("Are you sure you want to clear your AI-generated recipe history? Your selected pantry items will remain untouched.")) {
+      localStorage.removeItem(AI_STORAGE_KEY);
+      window.PANTRY_RECIPES = window.PANTRY_RECIPES.filter(r => !r.aiGenerated);
+      renderRecipesGrid();
+
+      const statusEl = document.getElementById("aiStorageStatus");
+      if (statusEl) {
+        statusEl.textContent = "✓ AI recipe history cleared!";
+        setTimeout(() => statusEl.textContent = "", 3500);
+      }
+    }
+  }
+
   async function generateCustomAiRecipe() {
     const customPromptInput = document.getElementById("aiChefCustomPrompt");
     const statusBox = document.getElementById("aiChefStatusBox");
@@ -1020,7 +1278,13 @@ Output strictly valid JSON matching this exact structure with no markdown backti
             }
           } else {
             console.warn("[AI Chef] " + model + " returned " + response.status + ". Falling back to next model...");
-            lastErr = new Error(model + " returned HTTP " + response.status);
+            if (response.status === 403) {
+              lastErr = new Error("API Key Restricted or Referrer Mismatch (HTTP 403). Check Google Cloud HTTP Referrer settings.");
+            } else if (response.status === 429) {
+              lastErr = new Error("AI Quota Exceeded (HTTP 429). Please try again in a moment.");
+            } else {
+              lastErr = new Error(model + " returned HTTP " + response.status);
+            }
           }
         } catch (mErr) {
           console.warn("[AI Chef] " + model + " failed:", mErr);
@@ -1029,33 +1293,26 @@ Output strictly valid JSON matching this exact structure with no markdown backti
       }
 
       if (!rawText) {
-        throw lastErr || new Error("All AI models currently unavailable.");
+        throw lastErr || new Error("All AI models currently unavailable. Please try again.");
       }
 
-      const recipe = JSON.parse(rawText);
-      console.log("[AI Chef] Successfully generated recipe with:", usedModel);
+      // v0.5 AI Schema Validator & Sanitization Layer
+      const rawJson = JSON.parse(rawText);
+      const sanitizedRecipe = validateAndSanitizeAiRecipe(rawJson);
+      console.log("[AI Chef] Sanitized and validated recipe generated with:", usedModel, sanitizedRecipe);
 
-      recipe.aiGenerated = true;
-      recipe.id = "ai-" + Date.now();
-
-      // Ensure all ingredients have role
-      if (Array.isArray(recipe.ingredients)) {
-        recipe.ingredients.forEach(i => {
-          if (!i.role) i.role = "core";
-        });
-      }
-
-      window.PANTRY_RECIPES.unshift(recipe);
-      saveAiRecipe(recipe);
+      window.PANTRY_RECIPES.unshift(sanitizedRecipe);
+      saveAiRecipe(sanitizedRecipe);
 
       closeAiChefModal();
+      renderIngredientChips();
       renderRecipesGrid();
-      openRecipeDetail(recipe.id);
+      openRecipeDetail(sanitizedRecipe.id);
 
     } catch (err) {
       console.error("AI Generation Error:", err);
       if (statusText) {
-        statusText.innerHTML = "<span style=\"color:var(--tomato);\">Could not generate recipe: " + (err.message || "Please check connection") + "</span>";
+        statusText.innerHTML = "<span style=\"color:var(--tomato); font-weight:700;\">⚠️ " + (err.message || "Could not generate recipe") + "</span>";
       }
       if (generateBtn) generateBtn.disabled = false;
     }
@@ -1076,6 +1333,16 @@ Output strictly valid JSON matching this exact structure with no markdown backti
     if (closeAiFooterBtn) closeAiFooterBtn.addEventListener("click", closeAiChefModal);
 
     const genAiBtn = document.getElementById("generateAiRecipeBtn");
+    // v0.5 Backup & Storage Listeners
+    const exportBtn = document.getElementById("exportAiRecipesBtn");
+    if (exportBtn) exportBtn.addEventListener("click", exportAiRecipes);
+
+    const importInput = document.getElementById("importAiRecipesInput");
+    if (importInput) importInput.addEventListener("change", handleImportAiRecipes);
+
+    const clearAiBtn = document.getElementById("clearAiRecipesBtn");
+    if (clearAiBtn) clearAiBtn.addEventListener("click", clearAiRecipesHistory);
+
     if (genAiBtn) genAiBtn.addEventListener("click", generateCustomAiRecipe);
 
     el.ingredientSearch.addEventListener("input", (e) => {
